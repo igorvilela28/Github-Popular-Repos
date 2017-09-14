@@ -1,6 +1,6 @@
 # Desafio de programação mobile Android
 
-A idéia deste desafio é nos permitir avaliar melhor as habilidades de candidatos à vagas de programador, de vários níveis.
+A ideia deste desafio é nos permitir avaliar melhor as habilidades de candidatos à vagas de programador, de vários níveis.
 
 Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
 
@@ -47,7 +47,8 @@ Você ganha mais pontos se:
 - fazer cache de imagens
 - utilizar Kotlin
 - utilizar RxJava ou RxKotlin
-- suportar mudanças de orientação das telas sem perder estado (Sem utilizar o onConfigChanges)
+- utilizar os Android Architecture Components
+- suportar mudanças de orientação das telas sem perder estado (Sem utilizar o configChanges)
 
 As sugestões de bibliotecas fornecidas são só um guideline, sinta-se a vontade para usar soluções diferentes e nos surpreender. O importante de fato é que os objetivos macros sejam atingidos.
 
