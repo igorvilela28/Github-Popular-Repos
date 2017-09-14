@@ -10,12 +10,6 @@ Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quise
 1. Em seguida, implemente o projeto tal qual descrito abaixo, em seu próprio fork.
 1. Por fim, empurre todas as suas alterações para o seu fork no GitHub e envie um pull request para este repositório original. Se você já entrou em contato com alguém da AppProva sobre uma vaga, avise também essa pessoa por email, incluindo no email o seu usuário no GitHub.
 
-### Instruções alternativas (caso você não queira que sua submissão seja pública)
-
-1. Faça um clone deste repositório.
-1. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-1. Por fim, envie via email um arquivo patch para seu contato na Myfreecomm.
-
 ## Descrição do projeto
 
 Você deve criar um aplicativo que irá listar os repositórios públicos mais populares relacionados a Java no GitHub, usando a [API do GitHub](https://developer.github.com/v3/) para buscar os dados necessários.
