@@ -1,6 +1,6 @@
 # Desafio de programação mobile Android
 
-A ideia deste desafio é nos permitir avaliar melhor as habilidades de candidatos à vagas de programador, de vários níveis.
+A ideia deste desafio é nos permitir avaliar melhor as habilidades de candidatos a vagas de programador, de vários níveis.
 
 Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
 
@@ -18,7 +18,7 @@ Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quise
 
 ## Descrição do projeto
 
-Você deve criar um aplicativo que irá listar os repositórios públicos mais populares relacionados à Java no GitHub, usando a [API do GitHub](https://developer.github.com/v3/) para buscar os dados necessários.
+Você deve criar um aplicativo que irá listar os repositórios públicos mais populares relacionados a Java no GitHub, usando a [API do GitHub](https://developer.github.com/v3/) para buscar os dados necessários.
 
 O aplicativo deve exibir inicialmente uma lista paginada dos repositórios, ordenados por popularidade decrescente (exemplo de chamada da API: `https://api.github.com/search/repositories?q=language:Java&sort=stars&page=1`).
 
