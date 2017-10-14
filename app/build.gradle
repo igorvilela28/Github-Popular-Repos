@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 26
@@ -23,16 +22,11 @@ android {
     }
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}
-
 ext {
     // dependencies versions
     supportLibraryVersion = '26.1.0'
     playServicesVersion = '11.2.2'
+    daggerVersion = '2.11'
 }
 
 dependencies {
@@ -58,15 +52,14 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
 
-    //view injection
-    implementation ('com.jakewharton:butterknife:8.6.0') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    //dependency injection
+    compile "com.google.dagger:dagger:$daggerVersion"
+    compile "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     //logging
     implementation 'com.jakewharton.timber:timber:4.5.1'
-
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
@@ -74,5 +67,11 @@ dependencies {
     })
 
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
 }
