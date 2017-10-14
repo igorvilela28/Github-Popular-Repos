@@ -18,6 +18,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/mainTv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="30sp"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="@android:style/Widget.Holo.ProgressBar"
