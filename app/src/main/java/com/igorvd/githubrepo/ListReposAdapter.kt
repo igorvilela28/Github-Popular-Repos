@@ -4,10 +4,11 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 
 import android.view.LayoutInflater
 import com.igorvd.githubrepo.data.GitHubRepo
+import com.igorvd.githubrepo.utils.extensions.loadImageFromUrl
+import kotlinx.android.synthetic.main.popular_repos_item.view.*
 
 
 /**
@@ -18,23 +19,7 @@ class ListReposAdapter (
         val context: Context,
         val repos: List<GitHubRepo>) : RecyclerView.Adapter<ListReposAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        lateinit var tvTitle: TextView
-        lateinit var tvDescription: TextView
-        lateinit var tvStars: TextView
-        lateinit var tvForks: TextView
-        lateinit var tvUsername: TextView
-        lateinit var tvFullname: TextView
-        lateinit var ivAvatar: TextView
-        lateinit var ivForks: TextView
-        lateinit var ivStars: TextView
-
-        init {
-            tvTitle = itemView.findViewById(R.id.repoListTvTitle)
-        }
-
-    }
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
@@ -44,15 +29,21 @@ class ListReposAdapter (
         return MyViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return repos.size
-    }
+    override fun getItemCount(): Int = repos.size
+
+    override fun getItemId(position: Int): Long = repos.get(position).id.toLong()
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val repo: GitHubRepo = repos.get(position)
 
-        holder.tvTitle.text = repo.fullName
+        holder.itemView.repoListTvTitle.text = repo.name
+        holder.itemView.repoListTvDescription.text = repo.description
+        holder.itemView.repoListTvForks.text = repo.forksCount.toString()
+        holder.itemView.repoListTvStars.text = repo.stargazersCount.toString()
+        holder.itemView.repoListTvUsername.text = repo.owner.login
+        //holder.itemView.repoListTvFullname.text = repo.owner.
+        holder.itemView.repoListIvAvatar.loadImageFromUrl(repo.owner.avatarUrl)
 
     }
 
