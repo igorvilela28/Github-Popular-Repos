@@ -16,10 +16,12 @@ import com.igorvd.githubrepo.presentation.popular_repos.PopularReposPresenter
 import com.igorvd.githubrepo.utils.EndlessRecyclerViewScrollListener
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), PopularReposContract.View {
 
@@ -30,13 +32,18 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
     lateinit var mPresenter : PopularReposContract.Presenter
 
     private lateinit var mProgressBar : ProgressBar
-    private lateinit var mRecyclerView : RecyclerView
-    private lateinit var mLayoutManager: LinearLayoutManager
-    private lateinit var mAdapter : RecyclerViewAdapter
-    private lateinit var mItems : ArrayList<String>
-    private lateinit var mScrollListener : EndlessRecyclerViewScrollListener
 
-    var count : Int = 1
+    //recycler view objects
+    private val mRecyclerView : RecyclerView by lazy {
+        setupRecyclerView()
+    }
+
+    private val mLayoutManager: LinearLayoutManager by lazy { LinearLayoutManager(this) }
+    private val mAdapter : ListReposAdapter by lazy { ListReposAdapter(this, mItems) }
+    private lateinit var mScrollListener : EndlessRecyclerViewScrollListener
+    private val mItems : ArrayList<GitHubRepo> by lazy {ArrayList<GitHubRepo>()}
+
+    private var mLoadRepositoriesJob : Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -45,13 +52,23 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //setupRecyclerView()
+        mScrollListener = object : EndlessRecyclerViewScrollListener(mLayoutManager) {
+
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+
+                launch(UI) {
+                    mPresenter.loadRepositories()
+                }
+            }
+        }
+
+        mRecyclerView.addOnScrollListener(mScrollListener)
 
         mProgressBar = progressBar as ProgressBar
 
         println("On create");
 
-        launch(UI) {
+        mLoadRepositoriesJob = launch(UI) {
             mPresenter.loadRepositories()
         }
     }
@@ -63,6 +80,15 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
         if(listState != null) {
             mLayoutManager.onRestoreInstanceState(listState)
         }
+    }
+
+    override fun onDestroy() {
+
+        if(mLoadRepositoriesJob != null && mLoadRepositoriesJob!!.isActive) {
+            mLoadRepositoriesJob!!.cancel()
+        }
+
+        super.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
@@ -84,7 +110,8 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
 
         println("Repos loaded")
 
-        mainTv.text = "Repos loaded"
+        mItems.addAll(repositories)
+        mAdapter.notifyDataSetChanged()
 
     }
 
@@ -98,5 +125,16 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
 
     override fun showError() {
         mainTv.text = "exception"
+    }
+
+    //inner methods
+
+    private fun setupRecyclerView() : RecyclerView {
+
+        mainRv.layoutManager = mLayoutManager
+        mainRv.adapter = mAdapter
+        mainRv.itemAnimator = DefaultItemAnimator()
+
+        return mainRv
     }
 }
