@@ -21,13 +21,18 @@ constructor(val gitHubApi: GitHubApi,
 
     val LANGUAGE_PREFIX = "language:";
 
+    var currentPage : Int = 0
+
     @Throws(RepositoryException::class)
     override suspend fun loadRepositories(language: String?, sort: String, order: String, page: Int):
             List<GitHubRepo>  {
 
             val newLanguage = LANGUAGE_PREFIX + language
 
-            val getRepos: Call<GitHubRepoResponse> = gitHubApi.getPopularRepos(newLanguage)
+            currentPage++
+
+            val getRepos: Call<GitHubRepoResponse> = gitHubApi.getPopularRepos(newLanguage,
+                    page=currentPage)
 
            return syncRequestManager.getResult(getRepos).items
     }
