@@ -1,6 +1,6 @@
 package com.igorvd.githubrepo.dependency_injection.core
 
-import com.igorvd.githubrepo.MainActivity
+import com.igorvd.githubrepo.presentation.popular_repos.PopularReposActivity
 import com.igorvd.githubrepo.dependency_injection.domain.GitHubRepoModule
 import com.igorvd.githubrepo.dependency_injection.ui.MainModule
 import dagger.Module
@@ -19,6 +19,6 @@ abstract class BuilderModule {
     @ContributesAndroidInjector(modules = arrayOf(
             GitHubRepoModule::class,
             MainModule::class))
-    abstract fun contributeMainActivity() : MainActivity;
+    abstract fun contributeMainActivity() : PopularReposActivity;
 
 }

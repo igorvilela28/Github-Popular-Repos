@@ -1,29 +1,28 @@
-package com.igorvd.githubrepo
+package com.igorvd.githubrepo.presentation.popular_repos
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
-import android.os.PersistableBundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ProgressBar
+import com.igorvd.githubrepo.R
 import com.igorvd.githubrepo.data.GitHubRepo
-import com.igorvd.githubrepo.presentation.popular_repos.PopularReposContract
 import com.igorvd.githubrepo.utils.EndlessRecyclerViewScrollListener
 import com.igorvd.githubrepo.utils.extensions.centerViewBottom
 import com.igorvd.githubrepo.utils.extensions.centerViewInParent
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_popular_repos.*
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity(), PopularReposContract.View {
+class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
     private val LIST_STATE_KEY = "recycler_state"
     private val ITEMS_STATE_KEY = "items_state"
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
     //recycler view objects
     private val mRecyclerView : RecyclerView by lazy { setupRecyclerView() }
     private val mLayoutManager: LinearLayoutManager by lazy { LinearLayoutManager(this) }
-    private val mAdapter : ListReposAdapter by lazy { ListReposAdapter(this, mItems) }
+    private val mAdapter : PopularReposAdapter by lazy { PopularReposAdapter(this, mItems) }
     private val mScrollListener : EndlessRecyclerViewScrollListener by lazy { createScrollListener() }
     private val mItems : ArrayList<GitHubRepo> by lazy { ArrayList<GitHubRepo>() }
 
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
         AndroidInjection.inject(this);
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_popular_repos)
 
         /* because we're using the lazy init, we need to use our recyclerView for the objects
         initialize, otherwise we could simple put this method into the [setupRecyclerView()] */

@@ -1,4 +1,4 @@
-package com.igorvd.githubrepo
+package com.igorvd.githubrepo.presentation.popular_repos
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.view.LayoutInflater
+import com.igorvd.githubrepo.R
 import com.igorvd.githubrepo.data.GitHubRepo
 import com.igorvd.githubrepo.utils.extensions.loadImageFromUrl
 import kotlinx.android.synthetic.main.popular_repos_item.view.*
@@ -15,9 +16,9 @@ import kotlinx.android.synthetic.main.popular_repos_item.view.*
  * @author Igor Vilela
  * @since 14/10/17
  */
-class ListReposAdapter (
+class PopularReposAdapter(
         val context: Context,
-        val repos: List<GitHubRepo>) : RecyclerView.Adapter<ListReposAdapter.MyViewHolder>() {
+        val repos: List<GitHubRepo>) : RecyclerView.Adapter<PopularReposAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

@@ -6,7 +6,7 @@
     android:id="@+id/mainRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.igorvd.githubrepo.MainActivity">
+    tools:context="com.igorvd.githubrepo.presentation.popular_repos.PopularReposActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mainRv"
