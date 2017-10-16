@@ -1,6 +1,8 @@
 package com.igorvd.githubrepo.presentation.popular_repos
 
 import com.igorvd.githubrepo.data.GitHubRepo
+import com.igorvd.githubrepo.presentation.BasePresenter
+import com.igorvd.githubrepo.presentation.BaseView
 
 /**
  * Defines a contract to be respected by the presenter-view interaction of the MVP
@@ -9,7 +11,7 @@ import com.igorvd.githubrepo.data.GitHubRepo
  */
 interface PopularReposContract {
 
-    interface Presenter {
+    interface Presenter : BasePresenter {
 
         suspend fun loadRepositories(
                 language : String?="java",
@@ -19,12 +21,9 @@ interface PopularReposContract {
 
     }
 
-    interface View {
+    interface View : BaseView {
 
         fun showRepositories(repositories : List<GitHubRepo>)
-        fun showProgress();
-        fun hideProgress();
-        fun showError();
 
     }
 

@@ -13,7 +13,7 @@ class PopularReposPresenter
 @Inject
 constructor(
         @Named("network") val mLoadGitHubReposInteractor: LoadGitHubReposInteractor,
-        val mView : PopularReposContract.View?) :
+        var mView : PopularReposContract.View?) :
         PopularReposContract.Presenter  {
 
     override suspend fun loadRepositories(language: String?, sort: String, order: String, page: Int) {
@@ -22,6 +22,11 @@ constructor(
             val repos = mLoadGitHubReposInteractor.execute().await()
             mView?.showRepositories(repos)
         })
+    }
+
+    override fun detachView() {
+
+        mView = null
     }
 
     private suspend fun doWorkWithProgress(work: suspend () -> Unit) {
