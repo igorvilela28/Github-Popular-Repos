@@ -1,6 +1,9 @@
 package com.igorvd.githubrepo.presentation.popular_repos
 
 import com.igorvd.githubrepo.domain.LoadGitHubReposInteractor
+import com.igorvd.githubrepo.domain.exceptions.IORepositoryException
+import com.igorvd.githubrepo.domain.exceptions.RepositoryException
+import com.igorvd.githubrepo.utils.extensions.throwOrLog
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Named
@@ -12,7 +15,8 @@ import javax.inject.Named
 class PopularReposPresenter
 @Inject
 constructor(
-        @Named("network") val mLoadGitHubReposInteractor: LoadGitHubReposInteractor,
+        @Named("network")
+        val mLoadGitHubReposInteractor: LoadGitHubReposInteractor,
         var mView : PopularReposContract.View?) :
         PopularReposContract.Presenter  {
 
@@ -35,11 +39,13 @@ constructor(
 
         mView?.showProgress()
         try {
-            work.invoke()
-        } catch(e: IOException) {
+            work()
+        } catch(e: IORepositoryException) {
+            mView?.showError()
+        } catch (e: RepositoryException) {
             mView?.showError()
         } catch (e: Exception) {
-            mView?.showError()
+            e.throwOrLog()
         } finally {
             mView?.hideProgress()
         }
