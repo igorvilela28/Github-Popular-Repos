@@ -94,6 +94,8 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
             mLoadRepositoriesJob!!.cancel()
         }
 
+        mPresenter.detachView()
+
         super.onDestroy()
     }
 
@@ -166,6 +168,7 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
     private fun setupRecyclerView() : RecyclerView {
 
         mainRv.layoutManager = mLayoutManager
+        mAdapter.setHasStableIds(true)
         mainRv.adapter = mAdapter
         mainRv.itemAnimator = DefaultItemAnimator()
 
@@ -178,7 +181,7 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
 
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
 
-                launch(UI) {
+                mLoadRepositoriesJob = launch(UI) {
                     mPresenter.loadRepositories()
                 }
             }
