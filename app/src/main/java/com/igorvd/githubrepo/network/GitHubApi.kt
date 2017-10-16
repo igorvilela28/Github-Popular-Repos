@@ -23,6 +23,7 @@ interface GitHubApi {
             @Query("q") query: String="language:Java",
             @Query("sort") sort: String="stars",
             @Query("order") order: String="desc",
-            @Query("page") page: Int = 1) : Call<GitHubRepoResponse>
+            @Query("page") page: Int = 1,
+            @Query("per_page") perPage: Int = 20) : Call<GitHubRepoResponse>
 
 }
