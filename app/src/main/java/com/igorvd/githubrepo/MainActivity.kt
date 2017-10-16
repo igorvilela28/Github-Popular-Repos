@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity(), PopularReposContract.View {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
 
                 mLoadRepositoriesJob = launch(UI) {
-                    mPresenter.loadRepositories()
+                    mPresenter.loadRepositories(totalItemsCount)
                 }
             }
         }

@@ -16,10 +16,12 @@ constructor(
         var mView : PopularReposContract.View?) :
         PopularReposContract.Presenter  {
 
-    override suspend fun loadRepositories(language: String?, sort: String, order: String, page: Int) {
+    override suspend fun loadRepositories(currentItemsSize: Int) {
 
         doWorkWithProgress({
-            val repos = mLoadGitHubReposInteractor.execute().await()
+
+            val params = LoadGitHubReposInteractor.Params(currentItemsSize)
+            val repos = mLoadGitHubReposInteractor.execute(params).await()
             mView?.showRepositories(repos)
         })
     }

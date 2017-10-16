@@ -13,11 +13,7 @@ interface PopularReposContract {
 
     interface Presenter : BasePresenter {
 
-        suspend fun loadRepositories(
-                language : String?="java",
-                sort: String="stars",
-                order: String="desc",
-                page: Int = 1)
+        suspend fun loadRepositories(currentItemsSize: Int = 0)
 
     }
 

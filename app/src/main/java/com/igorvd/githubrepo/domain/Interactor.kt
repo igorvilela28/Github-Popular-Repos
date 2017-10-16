@@ -10,8 +10,8 @@ import kotlinx.coroutines.experimental.run
  * @author Igor Vilela
  * @since 13/10/17
  */
-interface Interactor<T> {
+interface Interactor<T, Params> {
 
-    suspend fun execute(): Deferred<T>
+    suspend fun execute(params: Params): Deferred<T>
 
 }
