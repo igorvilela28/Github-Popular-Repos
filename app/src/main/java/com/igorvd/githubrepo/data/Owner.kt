@@ -11,14 +11,14 @@ import com.google.gson.annotations.SerializedName
  * @since 12/10/17
  */
 data class Owner(
-        @SerializedName("login") private val login: String,
-        @SerializedName("id") private val id: Int,
-        @SerializedName("avatar_url") private val avatarUrl: String,
-        @SerializedName("gravatar_id") private val gravatarId: String,
-        @SerializedName("url") private val url: String,
-        @SerializedName("html_url") private val htmlUrl: String,
-        @SerializedName("type") private val type: String,
-        @SerializedName("site_admin") private val siteAdmin: Boolean
+        @SerializedName("login") val login: String,
+        @SerializedName("id") val id: Int,
+        @SerializedName("avatar_url")  val avatarUrl: String,
+        @SerializedName("gravatar_id")  val gravatarId: String,
+        @SerializedName("url")  val url: String,
+        @SerializedName("html_url")  val htmlUrl: String,
+        @SerializedName("type")  val type: String,
+        @SerializedName("site_admin")  val siteAdmin: Boolean
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
