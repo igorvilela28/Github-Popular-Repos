@@ -11,7 +11,7 @@ import dagger.Module
  * @since 14/10/17
  */
 @Module
-abstract class MainModule {
+abstract class PopularReposUiModule {
 
     @Binds
     abstract fun providesView(popularReposActivity: PopularReposActivity) : PopularReposContract.View

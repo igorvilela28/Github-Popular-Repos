@@ -3,7 +3,7 @@ package com.igorvd.githubrepo.dependency_injection.core
 import com.igorvd.githubrepo.presentation.popular_repos.PopularReposActivity
 import com.igorvd.githubrepo.dependency_injection.domain.GitHubRepoModule
 import com.igorvd.githubrepo.dependency_injection.domain.PullRequestModule
-import com.igorvd.githubrepo.dependency_injection.ui.MainModule
+import com.igorvd.githubrepo.dependency_injection.ui.PopularReposUiModule
 import com.igorvd.githubrepo.dependency_injection.ui.PullRequestsUiModule
 import com.igorvd.githubrepo.presentation.pull_requests.PullRequestsActivity
 import dagger.Module
@@ -21,7 +21,7 @@ abstract class BuilderModule {
 
     @ContributesAndroidInjector(modules = arrayOf(
             GitHubRepoModule::class,
-            MainModule::class))
+            PopularReposUiModule::class))
     abstract fun contributePopularReposActivity() : PopularReposActivity
 
     @ContributesAndroidInjector(modules = arrayOf(
