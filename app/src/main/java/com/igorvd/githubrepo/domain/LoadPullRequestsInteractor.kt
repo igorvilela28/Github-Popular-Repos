@@ -33,13 +33,11 @@ class LoadPullRequestsInteractor(private val pullRequestsRepository: PullRequest
         }
     }
 
-    private fun getPageToSearch(params: Params): Int=(params.currentItemsSize / params.pageSize) + 1
+    private fun getPageToSearch(params: Params): Int =
+            (params.currentItemsSize / params.pageSize) + 1
 
-    private fun isLastPage(params: Params) : Boolean {
-
-        return params.currentItemsSize % params.pageSize > 0
-
-    }
+    private fun isLastPage(params: Params) : Boolean =
+            params.currentItemsSize % params.pageSize > 0
 
     class Params (
             val ownerLogin: String,

@@ -19,6 +19,6 @@ fun Exception.throwOrLog() {
         throw this
     } else {
 
-        //TODO: add some crash-reporting tool log for the error otherwise
+        //TODO: add some crash-reporting tool log for the exception
     }
 }

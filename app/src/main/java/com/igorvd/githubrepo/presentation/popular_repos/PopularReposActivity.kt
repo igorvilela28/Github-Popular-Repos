@@ -9,10 +9,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.igorvd.githubrepo.R
 import com.igorvd.githubrepo.data.GitHubRepo
-import com.igorvd.githubrepo.data.PullRequest
 import com.igorvd.githubrepo.presentation.EXTRA_OWNER_LOGIN
 import com.igorvd.githubrepo.presentation.EXTRA_REPO_NAME
 import com.igorvd.githubrepo.presentation.pull_requests.PullRequestsActivity

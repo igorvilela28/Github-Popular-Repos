@@ -18,11 +18,9 @@ class SynchronousRequestManagerImpl<T> : SynchronousRequestManager<T> {
     @Throws(RepositoryException::class)
     override fun getResult(call: Call<T>): T {
 
-        var response: Response<T>? = null
-
         try {
 
-            response = call.execute()
+            val response: Response<T> = call.execute()
             return parseResponse(call, response)
 
         } catch (e: IOException) {
