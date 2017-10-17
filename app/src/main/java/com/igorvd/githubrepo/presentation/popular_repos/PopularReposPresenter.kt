@@ -3,6 +3,7 @@ package com.igorvd.githubrepo.presentation.popular_repos
 import com.igorvd.githubrepo.domain.LoadGitHubReposInteractor
 import com.igorvd.githubrepo.domain.exceptions.IORepositoryException
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException
+import com.igorvd.githubrepo.presentation.AbstractPresenter
 import com.igorvd.githubrepo.utils.extensions.throwOrLog
 import java.io.IOException
 import javax.inject.Inject
@@ -18,7 +19,7 @@ constructor(
         @Named("network")
         val mLoadGitHubReposInteractor: LoadGitHubReposInteractor,
         var mView : PopularReposContract.View?) :
-        PopularReposContract.Presenter  {
+        AbstractPresenter(mView) , PopularReposContract.Presenter  {
 
     override suspend fun loadRepositories(currentItemsSize: Int) {
 
@@ -32,23 +33,8 @@ constructor(
 
     override fun detachView() {
 
+        super.detachView()
         mView = null
+        
     }
-
-    private suspend fun doWorkWithProgress(work: suspend () -> Unit) {
-
-        mView?.showProgress()
-        try {
-            work()
-        } catch(e: IORepositoryException) {
-            mView?.showError()
-        } catch (e: RepositoryException) {
-            mView?.showError()
-        } catch (e: Exception) {
-            e.throwOrLog()
-        } finally {
-            mView?.hideProgress()
-        }
-    }
-
 }

@@ -216,7 +216,7 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
         setSupportActionBar(mToolbar)
         supportActionBar!!.setHomeButtonEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        mCtlToolbar.title = mRepoName
+        mCtlToolbar.title = getString(R.string.title_pull_requests, mRepoName)
 
         mBtnTryAgain.setOnClickListener({
             loadOpenRepositories()

@@ -4,6 +4,7 @@ import com.igorvd.githubrepo.data.model.PullRequest
 import com.igorvd.githubrepo.domain.LoadPullRequestsInteractor
 import com.igorvd.githubrepo.domain.exceptions.IORepositoryException
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException
+import com.igorvd.githubrepo.presentation.AbstractPresenter
 import com.igorvd.githubrepo.utils.extensions.throwOrLog
 import javax.inject.Inject
 import javax.inject.Named
@@ -18,7 +19,7 @@ constructor(
         @Named("network")
         val mLoadPullRequestsInteractor: LoadPullRequestsInteractor,
         var mView : PullRequestsContract.View?) :
-        PullRequestsContract.Presenter {
+        AbstractPresenter(mView), PullRequestsContract.Presenter {
 
     suspend override fun loadOpenPullRequests(ownerLogin: String, repoName: String,
                                               currentItemsSize: Int) {
@@ -37,24 +38,8 @@ constructor(
     }
 
     override fun detachView() {
-
+        super.detachView()
         mView = null
-    }
-
-    private suspend fun doWorkWithProgress(work: suspend () -> Unit) {
-
-        mView?.showProgress()
-        try {
-            work()
-        } catch(e: IORepositoryException) {
-            mView?.showError()
-        } catch (e: RepositoryException) {
-            mView?.showError()
-        } catch (e: Exception) {
-            e.throwOrLog()
-        } finally {
-            mView?.hideProgress()
-        }
     }
 
 }

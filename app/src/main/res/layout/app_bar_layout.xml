@@ -12,6 +12,7 @@
         android:id="@+id/ctlToolbar"
         android:layout_width="match_parent"
         android:layout_height="120dp"
+        android:elevation="4dp"
         app:contentScrim="?attr/colorPrimary"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
         app:titleEnabled="true"
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/material_layout_app_bar_height"
             android:minHeight="?attr/actionBarSize"
+            android:elevation="4dp"
             app:layout_collapseMode="pin"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
