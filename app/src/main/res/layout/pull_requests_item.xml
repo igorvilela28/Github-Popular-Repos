@@ -28,10 +28,13 @@
             android:textColor="@color/material_lightblue800"
             android:textStyle="bold"
             android:textSize="@dimen/text_medium"
-            app:layout_constraintEnd_toStartOf="@+id/pullRequestLLOwnerContainer"
+            android:layout_marginTop="@dimen/margin_padding_small"
+            android:layout_marginStart="@dimen/margin_padding_small"
+            android:layout_marginEnd="@dimen/margin_padding_small"
             app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/pullRequestTvDescription"
@@ -39,41 +42,61 @@
             android:layout_height="wrap_content"
             android:maxLines="4"
             tools:text="Description"
+            android:layout_marginStart="@dimen/margin_padding_small"
+            android:layout_marginEnd="@dimen/margin_padding_small"
             android:layout_marginTop="@dimen/margin_padding_small"
-            app:layout_constraintEnd_toStartOf="@+id/pullRequestLLOwnerContainer"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pullRequestTvTitle"/>
+            app:layout_constraintTop_toBottomOf="@+id/pullRequestTvTitle"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <LinearLayout
-            android:id="@+id/pullRequestLLOwnerContainer"
+
+        <ImageView
+            android:id="@+id/pullRequestIvAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            tools:src="@drawable/ic_launcher_background"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/margin_padding_small"
+            android:layout_marginStart="@dimen/margin_padding_small"
+            app:layout_constraintTop_toBottomOf="@+id/pullRequestTvDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/pullRequestTvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/margin_padding_small"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintRight_toRightOf="parent"
-            card_view:layout_constraintBottom_toBottomOf="parent">
+            android:textColor="@color/material_lightblue800"
+            tools:text="TextView"
+            android:gravity="end"
+            android:textAlignment="textEnd"
+            android:layout_marginStart="@dimen/margin_padding_small"
+            app:layout_constraintTop_toTopOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintStart_toEndOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
+            />
 
-            <ImageView
-                android:id="@+id/pullRequestIvAvatar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                tools:src="@drawable/ic_launcher_background"/>
 
-            <TextView
-                android:id="@+id/pullRequestTvUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/material_lightblue800"
-                tools:text="TextView"
-                android:gravity="end"
-                android:textAlignment="textEnd"
-                android:layout_marginTop="@dimen/margin_padding_small"/>
+        <TextView
+            android:id="@+id/pullRequestTvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="17/10/2017"
+            android:textSize="@dimen/text_micro"
+            android:gravity="end"
+            android:textAlignment="textEnd"
+            android:layout_marginEnd="@dimen/margin_padding_small"
+            app:layout_constraintTop_toTopOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintStart_toEndOf="@+id/pullRequestTvUsername"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="1.0"
+            />
 
-        </LinearLayout>
-        
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>
