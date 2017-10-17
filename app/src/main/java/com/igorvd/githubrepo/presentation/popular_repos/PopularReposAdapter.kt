@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import com.igorvd.githubrepo.R
 import com.igorvd.githubrepo.data.GitHubRepo
 import com.igorvd.githubrepo.utils.extensions.loadImageFromUrl
+import kotlinx.android.synthetic.main.item_progress.view.*
 import kotlinx.android.synthetic.main.popular_repos_item.view.*
 
 
@@ -18,24 +19,107 @@ import kotlinx.android.synthetic.main.popular_repos_item.view.*
  */
 class PopularReposAdapter(
         val context: Context,
-        val repos: List<GitHubRepo>) : RecyclerView.Adapter<PopularReposAdapter.MyViewHolder>() {
+        val repos: List<GitHubRepo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class MyFooterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    //constants for footer types
+    private val TYPE_LOADING = 0
+    private val TYPE_ERROR = 1
+    private var currentFootType = TYPE_LOADING
 
-        val itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.popular_repos_item, parent, false)
+    //view types
+    private val ITEMS = 0
+    private val LOAD_MORE = 1
 
-        return MyViewHolder(itemView)
+    //public variables
+    var hasFooter = false
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        return if(viewType == ITEMS) {
+            val itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.popular_repos_item, parent, false)
+
+            MyViewHolder(itemView)
+        } else {
+
+            val itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_progress, parent, false)
+
+            MyFooterViewHolder(itemView)
+        }
     }
 
-    override fun getItemCount(): Int = repos.size
+    override fun getItemViewType(position: Int): Int {
+        return if (position == repos.size) {
+            LOAD_MORE
+        } else {
+            ITEMS
+        }
+    }
 
-    override fun getItemId(position: Int): Long = repos.get(position).id.toLong()
+    override fun getItemCount(): Int = repos.size + 1
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun getItemId(position: Int): Long {
 
+        return if(position == repos.size) {
+
+            Long.MAX_VALUE
+
+        } else {
+            repos.get(position).id.toLong()
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+        if(holder is MyViewHolder) {
+            bindItemViewHolder(holder, position)
+        } else if (holder is MyFooterViewHolder) {
+            bindFooterViewHolder(holder)
+        }
+    }
+
+    /**
+     * Shows a progress bar below the last item
+     */
+    fun showFooterProgress() {
+
+        setFooterType(TYPE_LOADING)
+    }
+
+    /**
+     * shows a error message below the last item
+     */
+    fun showFooterError() {
+        setFooterType(TYPE_ERROR)
+    }
+
+    /**
+     * Remove the progress or error message below the last item
+     */
+    fun removeFooter() {
+        this.hasFooter = false
+        notifyDataSetChanged()
+    }
+
+    //**************************************************************************
+    // INNER METHODS
+    //**************************************************************************
+
+    /**
+     * Change the footer type
+     * @param[type] Must be one of [TYPE_ERROR] or [TYPE_LOADING]
+     */
+    private fun setFooterType(type: Int) {
+        this.hasFooter = true
+        this.currentFootType = type
+        notifyDataSetChanged()
+    }
+
+    private fun bindItemViewHolder(holder: MyViewHolder, position: Int) {
         val repo: GitHubRepo = repos.get(position)
 
         holder.itemView.repoListTvTitle.text = repo.name
@@ -45,10 +129,27 @@ class PopularReposAdapter(
         holder.itemView.repoListTvUsername.text = repo.owner.login
         //holder.itemView.repoListTvFullname.text = repo.owner.
         holder.itemView.repoListIvAvatar.loadImageFromUrl(repo.owner.avatarUrl)
-
     }
 
+    private fun bindFooterViewHolder(holder: MyFooterViewHolder) {
 
+        val visibility = if(hasFooter) View.VISIBLE else View.GONE
+        holder.itemView.progressRoot.visibility = visibility
+
+        if(currentFootType == TYPE_LOADING) {
+
+            holder.itemView.itemProgressLLRetry.visibility = View.GONE
+            holder.itemView.itemprogressIvRetryIcon.visibility = View.GONE
+            holder.itemView.progressBar.visibility = View.VISIBLE
+
+        } else if (currentFootType == TYPE_ERROR) {
+
+            holder.itemView.progressBar.visibility = View.GONE
+            holder.itemView.itemProgressLLRetry.visibility = View.VISIBLE
+            holder.itemView.itemprogressIvRetryIcon.visibility = View.VISIBLE
+
+        }
+    }
 
 
 }
