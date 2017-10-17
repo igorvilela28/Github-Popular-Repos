@@ -23,7 +23,13 @@
         </activity>
         <activity
             android:name=".presentation.pull_requests.PullRequestsActivity"
+            android:parentActivityName=".presentation.popular_repos.PopularReposActivity"
             android:launchMode="singleTop">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.popular_repos.PopularReposActivity"/>
+
         </activity>
     </application>
 

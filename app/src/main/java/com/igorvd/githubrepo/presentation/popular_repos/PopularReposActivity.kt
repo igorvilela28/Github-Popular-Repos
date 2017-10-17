@@ -7,6 +7,7 @@ import android.os.Parcelable
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ProgressBar
 import com.igorvd.githubrepo.R
@@ -17,6 +18,7 @@ import com.igorvd.githubrepo.presentation.pull_requests.PullRequestsActivity
 import com.igorvd.githubrepo.utils.EndlessRecyclerViewScrollListener
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_popular_repos.*
+import kotlinx.android.synthetic.main.app_bar_layout.*
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -33,6 +35,7 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
     lateinit var mPresenter : PopularReposContract.Presenter
 
     //view objects
+    private val mToolbar : Toolbar by lazy { toolbar }
     private val mProgressBar : ProgressBar by lazy { progressBar }
 
     //recycler view objects
@@ -61,12 +64,7 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_popular_repos)
 
-
-        /* because we're using the lazy init, we need to use our recyclerView for the objects
-        initialize, otherwise we could simple put this method into the [setupRecyclerView()] */
-        mRecyclerView.addOnScrollListener(mScrollListener)
-
-        println("On create");
+        initViews()
 
         if(savedInstanceState != null) {
 
@@ -174,6 +172,18 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
         it.putExtra(EXTRA_OWNER_LOGIN, gitHubRepo.owner.login)
         it.putExtra(EXTRA_REPO_NAME, gitHubRepo.name)
         startActivity(it)
+    }
+
+    private fun initViews() {
+
+        /* because we're using the lazy init, we need to use our recyclerView for the objects
+        initialize, otherwise we could simple put this method into the [setupRecyclerView()] */
+        mRecyclerView.addOnScrollListener(mScrollListener)
+
+        setSupportActionBar(mToolbar)
+        supportActionBar!!.setHomeButtonEnabled(false)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+
     }
 
     private fun restoreInstance(savedInstanceState: Bundle) {

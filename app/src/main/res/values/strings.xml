@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GitHubRepo</string>
+
+    <string name="title_popular_java_repos">Popular Java GitHub Repos</string>
+    <string name="title_pull_requests">Pull Requests</string>
 </resources>

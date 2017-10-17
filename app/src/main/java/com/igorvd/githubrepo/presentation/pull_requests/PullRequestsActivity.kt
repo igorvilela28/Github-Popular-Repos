@@ -2,10 +2,12 @@ package com.igorvd.githubrepo.presentation.pull_requests
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -16,6 +18,7 @@ import com.igorvd.githubrepo.presentation.EXTRA_REPO_NAME
 import com.igorvd.githubrepo.utils.EndlessRecyclerViewScrollListener
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_pull_requests.*
+import kotlinx.android.synthetic.main.app_bar_layout.*
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -32,6 +35,9 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
 
     //view objects
     private val mProgressBar : ProgressBar by lazy { pullRequestsPb }
+    private val mToolbar : Toolbar by lazy { toolbar }
+    private val mCtlToolbar : CollapsingToolbarLayout by lazy { ctlToolbar }
+
 
     //recycler view objects
     private val mRecyclerView : RecyclerView by lazy { setupRecyclerView() }
@@ -70,9 +76,7 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
         ownerLogin = intent.getStringExtra(EXTRA_OWNER_LOGIN)
         repoName = intent.getStringExtra(EXTRA_REPO_NAME)
 
-        /* because we're using the lazy init, we need to use our recyclerView for the objects
-        initialize, otherwise we could simple put this method into the [setupRecyclerView()] */
-        mRecyclerView.addOnScrollListener(mScrollListener)
+        initViews()
 
         println("On create");
 
@@ -197,6 +201,19 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
 
     fun onPullRequestClicked(pullRequest: PullRequest) {
         Toast.makeText(this, "item clicked ${pullRequest.title}", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initViews() {
+
+        /* because we're using the lazy init, we need to use our recyclerView for the objects
+      initialize, otherwise we could simple put this method into the [setupRecyclerView()] */
+        mRecyclerView.addOnScrollListener(mScrollListener)
+
+        setSupportActionBar(mToolbar)
+        supportActionBar!!.setHomeButtonEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        mCtlToolbar.title = getString(R.string.title_pull_requests)
+
     }
 
     private fun restoreInstance(savedInstanceState: Bundle) {

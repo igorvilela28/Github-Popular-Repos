@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/app_bar_layout"/>
+
+
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.igorvd.githubrepo.presentation.popular_repos.PopularReposActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mainRv"
@@ -48,3 +59,4 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
