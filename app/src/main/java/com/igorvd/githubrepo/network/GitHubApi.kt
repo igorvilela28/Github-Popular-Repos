@@ -53,6 +53,7 @@ interface GitHubApi {
             @Path("repo") repoName: String,
             @Query("state") state: String="open",
             @Query("sort") sort: String="created",
+            @Query("direction") direction: String= "desc",
             @Query("page") page: Int = 1,
             @Query("per_page") perPage: Int = 20) : Call<List<PullRequest>>
 
