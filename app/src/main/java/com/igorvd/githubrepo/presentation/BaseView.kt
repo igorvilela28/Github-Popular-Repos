@@ -6,7 +6,18 @@ package com.igorvd.githubrepo.presentation
  */
 interface BaseView {
 
-    fun showProgress();
-    fun hideProgress();
-    fun showError();
+    /**
+     * Show a loading progress in the view
+     */
+    fun showProgress()
+
+    /**
+     * Hide the loading progress in the view
+     */
+    fun hideProgress()
+
+    /**
+     * Show a error message in the view
+     */
+    fun showError()
 }
