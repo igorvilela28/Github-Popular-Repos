@@ -115,26 +115,37 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
         println("Repos loaded")
 
+        if(mAdapter.hasFooter) {
+            mAdapter.removeFooter()
+        }
+
         mItems.addAll(repositories)
         mAdapter.notifyDataSetChanged()
     }
 
     override fun showProgress() {
 
-        changeProgressBarPosition()
-        mProgressBar.visibility = View.VISIBLE
+        if(mItems.size > 0) {
+            mAdapter.showFooterProgress()
+        } else {
 
+            mProgressBar.visibility = View.VISIBLE
+        }
     }
 
     override fun hideProgress() {
 
-        changeProgressBarPosition()
+        //mAdapter.removeFooter()
         mProgressBar.visibility = View.GONE
 
     }
 
     override fun showError() {
-        mainTv.text = "exception"
+
+        if(mItems.size > 0) {
+            mAdapter.showFooterError()
+        }
+
     }
 
     //**************************************************************************
@@ -150,16 +161,6 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
         if(items != null) {
             mItems.clear()
             mItems.addAll(items)
-        }
-
-    }
-
-    private fun changeProgressBarPosition() {
-
-        if(mItems.isEmpty()) {
-            mClRoot.centerViewInParent(mProgressBar)
-        } else {
-            mClRoot.centerViewBottom(mProgressBar)
         }
 
     }
