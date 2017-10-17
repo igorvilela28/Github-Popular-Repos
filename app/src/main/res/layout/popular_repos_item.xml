@@ -7,6 +7,8 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
     card_view:cardCornerRadius="4dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardPreventCornerOverlap="true"
@@ -15,8 +17,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:focusableInTouchMode="false"
         android:padding="@dimen/margin_padding_medium">
 
         <TextView

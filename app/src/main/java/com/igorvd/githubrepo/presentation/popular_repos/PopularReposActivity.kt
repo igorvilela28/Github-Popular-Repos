@@ -3,17 +3,16 @@ package com.igorvd.githubrepo.presentation.popular_repos
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.igorvd.githubrepo.R
 import com.igorvd.githubrepo.data.GitHubRepo
 import com.igorvd.githubrepo.utils.EndlessRecyclerViewScrollListener
-import com.igorvd.githubrepo.utils.extensions.centerViewBottom
-import com.igorvd.githubrepo.utils.extensions.centerViewInParent
+import com.igorvd.githubrepo.utils.ItemClickSupport
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_popular_repos.*
 import kotlinx.coroutines.experimental.Job
@@ -33,12 +32,17 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
     //view objects
     private val mProgressBar : ProgressBar by lazy { progressBar }
-    private val mClRoot : ConstraintLayout by lazy { mainRoot }
 
     //recycler view objects
     private val mRecyclerView : RecyclerView by lazy { setupRecyclerView() }
     private val mLayoutManager: LinearLayoutManager by lazy { LinearLayoutManager(this) }
-    private val mAdapter : PopularReposAdapter by lazy { PopularReposAdapter(this, mItems) }
+    private val mAdapter : PopularReposAdapter by lazy {
+        PopularReposAdapter(
+                this,
+                mItems,
+                onItemClicked = {gitHubRepo ->  onRepoClicked(gitHubRepo)},
+                onRetryClick = {loadRepositories()})
+    }
     private val mScrollListener : EndlessRecyclerViewScrollListener by lazy { createScrollListener() }
     private val mItems : ArrayList<GitHubRepo> by lazy { ArrayList<GitHubRepo>() }
 
@@ -50,10 +54,11 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AndroidInjection.inject(this);
+        AndroidInjection.inject(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_popular_repos)
+
 
         /* because we're using the lazy init, we need to use our recyclerView for the objects
         initialize, otherwise we could simple put this method into the [setupRecyclerView()] */
@@ -72,9 +77,7 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
          * saved by the [onSaveInstanceState] method
          */
         if(mItems.size <= 0) {
-            mLoadRepositoriesJob = launch(UI) {
-                mPresenter.loadRepositories()
-            }
+            loadRepositories()
         }
     }
 
@@ -135,7 +138,6 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
     override fun hideProgress() {
 
-        //mAdapter.removeFooter()
         mProgressBar.visibility = View.GONE
 
     }
@@ -152,9 +154,25 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
     // INNER METHODS
     //**************************************************************************
 
+    fun loadRepositories() {
+
+        //we don't call the presenter if is already doing something
+        if(mLoadRepositoriesJob != null && mLoadRepositoriesJob!!.isActive) {
+            return
+        }
+
+        mLoadRepositoriesJob = launch(UI) {
+            mPresenter.loadRepositories(mItems.size)
+        }
+    }
+
+    fun onRepoClicked(gitHubRepo: GitHubRepo) {
+        Toast.makeText(this, "item clicked ${gitHubRepo.name}", Toast.LENGTH_SHORT).show()
+    }
+
     private fun restoreInstance(savedInstanceState: Bundle) {
 
-        listState = savedInstanceState?.getParcelable(LIST_STATE_KEY)
+        listState = savedInstanceState.getParcelable(LIST_STATE_KEY)
 
         val items = savedInstanceState.getParcelableArrayList<GitHubRepo>(ITEMS_STATE_KEY)
 
@@ -181,9 +199,8 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
 
-                mLoadRepositoriesJob = launch(UI) {
-                    mPresenter.loadRepositories(totalItemsCount)
-                }
+                loadRepositories()
+
             }
         }
     }

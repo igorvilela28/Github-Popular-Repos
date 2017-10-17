@@ -19,7 +19,9 @@ import kotlinx.android.synthetic.main.popular_repos_item.view.*
  */
 class PopularReposAdapter(
         val context: Context,
-        val repos: List<GitHubRepo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        val repos: List<GitHubRepo>,
+        val onItemClicked: (GitHubRepo) -> Unit,
+        val onRetryClick: () -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     inner class MyFooterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -127,8 +129,8 @@ class PopularReposAdapter(
         holder.itemView.repoListTvForks.text = repo.forksCount.toString()
         holder.itemView.repoListTvStars.text = repo.stargazersCount.toString()
         holder.itemView.repoListTvUsername.text = repo.owner.login
-        //holder.itemView.repoListTvFullname.text = repo.owner.
         holder.itemView.repoListIvAvatar.loadImageFromUrl(repo.owner.avatarUrl)
+        holder.itemView.setOnClickListener { onItemClicked.invoke(repo) }
     }
 
     private fun bindFooterViewHolder(holder: MyFooterViewHolder) {
@@ -142,11 +144,17 @@ class PopularReposAdapter(
             holder.itemView.itemprogressIvRetryIcon.visibility = View.GONE
             holder.itemView.progressBar.visibility = View.VISIBLE
 
+            holder.itemView.progressRoot.setOnClickListener {  }
+
         } else if (currentFootType == TYPE_ERROR) {
 
             holder.itemView.progressBar.visibility = View.GONE
             holder.itemView.itemProgressLLRetry.visibility = View.VISIBLE
             holder.itemView.itemprogressIvRetryIcon.visibility = View.VISIBLE
+
+            holder.itemView.progressRoot.setOnClickListener {
+                onRetryClick.invoke()
+            }
 
         }
     }

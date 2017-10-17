@@ -6,6 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
+    android:clickable="true"
+    android:focusableInTouchMode="false"
+    android:foreground="?attr/selectableItemBackground"
     android:id="@+id/progressRoot">
 
     <ProgressBar
@@ -31,8 +34,6 @@
         android:id="@+id/itemProgressLLRetry"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/margin_padding_small"
         android:paddingTop="@dimen/margin_padding_small"
