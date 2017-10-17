@@ -9,6 +9,9 @@ import java.io.IOException
  */
 interface GitHubRepoRepository {
 
+    /**
+     * @throws RepositoryException
+     */
     @Throws(RepositoryException::class)
     suspend fun loadRepositories(
             language : String? = "java",

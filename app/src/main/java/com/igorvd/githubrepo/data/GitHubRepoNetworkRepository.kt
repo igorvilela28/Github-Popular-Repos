@@ -2,9 +2,8 @@ package com.igorvd.githubrepo.data
 
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException
 import com.igorvd.githubrepo.network.GitHubApi
-import com.igorvd.githubrepo.network.ApiClientBuilder
 import com.igorvd.githubrepo.network.GitHubRepoResponse
-import com.igorvd.githubrepo.network.requests.SynchronousRequestManagerImpl
+import com.igorvd.githubrepo.network.requests.SynchronousRequestManager
 import retrofit2.Call
 import javax.inject.Inject
 
@@ -15,7 +14,7 @@ import javax.inject.Inject
 class GitHubRepoNetworkRepository
 @Inject
 constructor(val gitHubApi: GitHubApi,
-            val syncRequestManager: SynchronousRequestManagerImpl<GitHubRepoResponse>)
+            val syncRequestManager: SynchronousRequestManager<GitHubRepoResponse>)
 
     : GitHubRepoRepository {
 
