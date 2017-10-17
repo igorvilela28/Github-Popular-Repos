@@ -64,7 +64,7 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
     private lateinit var mOwnerLogin: String
     private lateinit var mRepoName: String
 
-    private var mLoadRepositoriesJob : Job? = null
+    private var mLoadPullRequestsJob: Job? = null
 
     //**************************************************************************
     // ACTIVITY LIFE CYCLE
@@ -108,8 +108,8 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
 
     override fun onDestroy() {
 
-        if(mLoadRepositoriesJob != null && mLoadRepositoriesJob!!.isActive) {
-            mLoadRepositoriesJob!!.cancel()
+        if(mLoadPullRequestsJob != null && mLoadPullRequestsJob!!.isActive) {
+            mLoadPullRequestsJob!!.cancel()
         }
 
         mPresenter.detachView()
@@ -192,11 +192,11 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
     fun loadOpenRepositories() {
 
         //we don't call the presenter if is already doing something
-        if(mLoadRepositoriesJob != null && mLoadRepositoriesJob!!.isActive) {
+        if(mLoadPullRequestsJob != null && mLoadPullRequestsJob!!.isActive) {
             return
         }
 
-        mLoadRepositoriesJob = launch(UI) {
+        mLoadPullRequestsJob = launch(UI) {
             mPresenter.loadOpenPullRequests(mOwnerLogin, mRepoName, mItems.size)
         }
     }

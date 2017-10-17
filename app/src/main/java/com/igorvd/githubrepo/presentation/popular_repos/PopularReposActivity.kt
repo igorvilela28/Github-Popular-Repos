@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.default_error.*
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -32,7 +33,7 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
     private val LIST_STATE_KEY = "recycler_state"
     private val ITEMS_STATE_KEY = "items_state"
-    private var listState : Parcelable? = null
+    private var mListState: Parcelable? = null
 
     @Inject
     lateinit var mPresenter : PopularReposContract.Presenter
@@ -90,8 +91,8 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
         super.onResume()
 
-        if(listState != null) {
-            mLayoutManager.onRestoreInstanceState(listState)
+        if(mListState != null) {
+            mLayoutManager.onRestoreInstanceState(mListState)
         }
     }
 
@@ -109,8 +110,8 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
-        listState = mLayoutManager.onSaveInstanceState()
-        outState?.putParcelable(LIST_STATE_KEY, listState)
+        mListState = mLayoutManager.onSaveInstanceState()
+        outState?.putParcelable(LIST_STATE_KEY, mListState)
         outState?.putParcelableArrayList(ITEMS_STATE_KEY, mItems)
 
     }
@@ -121,7 +122,7 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
     override fun showRepositories(repositories: List<GitHubRepo>) {
 
-        println("Repos loaded")
+        Timber.d("Repos loaded")
 
         if(mAdapter.hasFooter) {
             mAdapter.removeFooter()
@@ -153,7 +154,9 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
     override fun showError() {
 
         if(mItems.size > 0) {
+
             mAdapter.showFooterError()
+
         } else {
 
             mBtnTryAgain.visibility = View.VISIBLE
@@ -204,7 +207,7 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
     private fun restoreInstance(savedInstanceState: Bundle) {
 
-        listState = savedInstanceState.getParcelable(LIST_STATE_KEY)
+        mListState = savedInstanceState.getParcelable(LIST_STATE_KEY)
 
         val items = savedInstanceState.getParcelableArrayList<GitHubRepo>(ITEMS_STATE_KEY)
 

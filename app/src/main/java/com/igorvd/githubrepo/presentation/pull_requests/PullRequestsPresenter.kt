@@ -36,11 +36,6 @@ constructor(
 
     }
 
-    suspend override fun loadClosedPullRequests(ownerLogin: String, repoName: String,
-                                                currentItemsSize: Int) {
-
-    }
-
     override fun detachView() {
 
         mView = null

@@ -13,12 +13,19 @@ interface PopularReposContract {
 
     interface Presenter : BasePresenter {
 
+        /**
+         * Load a list of repositories
+         * @param[currentItemsSize] the current visible list size on screen size
+         */
         suspend fun loadRepositories(currentItemsSize: Int = 0)
 
     }
 
     interface View : BaseView {
 
+        /**
+         * Show the loaded repositories list
+         */
         fun showRepositories(repositories : List<GitHubRepo>)
 
     }
