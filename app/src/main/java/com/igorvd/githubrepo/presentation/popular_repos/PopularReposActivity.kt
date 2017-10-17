@@ -12,7 +12,6 @@ import android.widget.Toast
 import com.igorvd.githubrepo.R
 import com.igorvd.githubrepo.data.GitHubRepo
 import com.igorvd.githubrepo.utils.EndlessRecyclerViewScrollListener
-import com.igorvd.githubrepo.utils.ItemClickSupport
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_popular_repos.*
 import kotlinx.coroutines.experimental.Job
