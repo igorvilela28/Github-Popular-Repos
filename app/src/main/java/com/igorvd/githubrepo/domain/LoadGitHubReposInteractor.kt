@@ -1,7 +1,7 @@
 package com.igorvd.githubrepo.domain
 
-import com.igorvd.githubrepo.data.GitHubRepo
-import com.igorvd.githubrepo.data.GitHubRepoRepository
+import com.igorvd.githubrepo.data.model.GitHubRepo
+import com.igorvd.githubrepo.data.repository.GitHubRepoRepository
 import com.igorvd.githubrepo.domain.LoadGitHubReposInteractor.Params
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred

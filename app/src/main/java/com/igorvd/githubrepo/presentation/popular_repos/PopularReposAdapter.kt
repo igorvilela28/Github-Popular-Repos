@@ -7,7 +7,7 @@ import android.view.ViewGroup
 
 import android.view.LayoutInflater
 import com.igorvd.githubrepo.R
-import com.igorvd.githubrepo.data.GitHubRepo
+import com.igorvd.githubrepo.data.model.GitHubRepo
 import com.igorvd.githubrepo.utils.extensions.loadImageFromUrl
 import kotlinx.android.synthetic.main.item_progress.view.*
 import kotlinx.android.synthetic.main.popular_repos_item.view.*

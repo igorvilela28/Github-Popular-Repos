@@ -1,5 +1,6 @@
-package com.igorvd.githubrepo.data
+package com.igorvd.githubrepo.data.repository
 
+import com.igorvd.githubrepo.data.model.PullRequest
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException
 
 /**

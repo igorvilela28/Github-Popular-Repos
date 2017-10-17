@@ -1,5 +1,7 @@
-package com.igorvd.githubrepo.data
+package com.igorvd.githubrepo.data.repository.impl
 
+import com.igorvd.githubrepo.data.model.PullRequest
+import com.igorvd.githubrepo.data.repository.PullRequestsRepository
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException
 import com.igorvd.githubrepo.network.GitHubApi
 import com.igorvd.githubrepo.network.requests.SynchronousRequestManager

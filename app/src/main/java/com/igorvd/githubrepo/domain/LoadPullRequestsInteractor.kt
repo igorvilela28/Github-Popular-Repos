@@ -1,9 +1,7 @@
 package com.igorvd.githubrepo.domain
 
-import com.igorvd.githubrepo.data.GitHubRepo
-import com.igorvd.githubrepo.data.GitHubRepoRepository
-import com.igorvd.githubrepo.data.PullRequest
-import com.igorvd.githubrepo.data.PullRequestsRepository
+import com.igorvd.githubrepo.data.model.PullRequest
+import com.igorvd.githubrepo.data.repository.PullRequestsRepository
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async

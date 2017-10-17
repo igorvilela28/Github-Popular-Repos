@@ -1,6 +1,7 @@
 package com.igorvd.githubrepo.presentation
 
 /**
+ * Extras keys to be used as [Intent] or [Bundle] keys
  * @author Igor Vilela
  * @since 17/10/17
  */

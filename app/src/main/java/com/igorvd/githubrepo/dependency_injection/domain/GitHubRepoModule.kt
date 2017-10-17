@@ -1,7 +1,7 @@
 package com.igorvd.githubrepo.dependency_injection.domain
 
-import com.igorvd.githubrepo.data.GitHubRepoNetworkRepository
-import com.igorvd.githubrepo.data.GitHubRepoRepository
+import com.igorvd.githubrepo.data.repository.impl.GitHubRepoNetworkRepository
+import com.igorvd.githubrepo.data.repository.GitHubRepoRepository
 import com.igorvd.githubrepo.domain.LoadGitHubReposInteractor
 import dagger.Module
 import dagger.Provides

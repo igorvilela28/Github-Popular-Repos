@@ -1,7 +1,7 @@
-package com.igorvd.githubrepo.data
+package com.igorvd.githubrepo.data.repository
 
+import com.igorvd.githubrepo.data.model.GitHubRepo
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException
-import java.io.IOException
 
 /**
  * @author Igor Vilela

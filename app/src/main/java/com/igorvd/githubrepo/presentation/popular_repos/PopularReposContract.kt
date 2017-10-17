@@ -1,6 +1,6 @@
 package com.igorvd.githubrepo.presentation.popular_repos
 
-import com.igorvd.githubrepo.data.GitHubRepo
+import com.igorvd.githubrepo.data.model.GitHubRepo
 import com.igorvd.githubrepo.presentation.BasePresenter
 import com.igorvd.githubrepo.presentation.BaseView
 

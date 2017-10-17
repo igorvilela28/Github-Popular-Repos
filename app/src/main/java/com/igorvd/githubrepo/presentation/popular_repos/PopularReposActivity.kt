@@ -13,7 +13,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.igorvd.githubrepo.R
-import com.igorvd.githubrepo.data.GitHubRepo
+import com.igorvd.githubrepo.data.model.GitHubRepo
 import com.igorvd.githubrepo.presentation.EXTRA_OWNER_LOGIN
 import com.igorvd.githubrepo.presentation.EXTRA_REPO_NAME
 import com.igorvd.githubrepo.presentation.pull_requests.PullRequestsActivity

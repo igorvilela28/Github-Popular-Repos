@@ -1,10 +1,7 @@
 package com.igorvd.githubrepo.dependency_injection.domain
 
-import com.igorvd.githubrepo.data.GitHubRepoNetworkRepository
-import com.igorvd.githubrepo.data.GitHubRepoRepository
-import com.igorvd.githubrepo.data.PullRequestsNetworkRepository
-import com.igorvd.githubrepo.data.PullRequestsRepository
-import com.igorvd.githubrepo.domain.LoadGitHubReposInteractor
+import com.igorvd.githubrepo.data.repository.impl.PullRequestsNetworkRepository
+import com.igorvd.githubrepo.data.repository.PullRequestsRepository
 import com.igorvd.githubrepo.domain.LoadPullRequestsInteractor
 import dagger.Module
 import dagger.Provides

@@ -1,6 +1,6 @@
 package com.igorvd.githubrepo.presentation.pull_requests
 
-import com.igorvd.githubrepo.data.PullRequest
+import com.igorvd.githubrepo.data.model.PullRequest
 import com.igorvd.githubrepo.domain.LoadPullRequestsInteractor
 import com.igorvd.githubrepo.domain.exceptions.IORepositoryException
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException

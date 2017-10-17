@@ -1,4 +1,4 @@
-package com.igorvd.githubrepo.data
+package com.igorvd.githubrepo.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
