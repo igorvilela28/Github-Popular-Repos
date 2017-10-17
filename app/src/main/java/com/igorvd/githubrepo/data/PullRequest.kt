@@ -26,7 +26,9 @@ data class PullRequest(
         @SerializedName("title")
         val title: String,
         @SerializedName("body")
-        val body: String
+        val body: String,
+        @SerializedName("created_at")
+        val createdAt: String
 
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -36,6 +38,7 @@ data class PullRequest(
             source.readInt(),
             source.readString(),
             1 == source.readInt(),
+            source.readString(),
             source.readString(),
             source.readString()
     )
@@ -51,6 +54,7 @@ data class PullRequest(
         writeInt((if (locked) 1 else 0))
         writeString(title)
         writeString(body)
+        writeString(createdAt)
     }
 
     companion object {
