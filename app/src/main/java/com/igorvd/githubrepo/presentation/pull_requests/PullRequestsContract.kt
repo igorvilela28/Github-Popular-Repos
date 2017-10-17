@@ -1,8 +1,8 @@
 package com.igorvd.githubrepo.presentation.pull_requests
 
-import com.igorvd.githubrepo.data.model.GitHubRepo
-import com.igorvd.githubrepo.data.model.PullRequest
-import com.igorvd.githubrepo.data.model.Owner
+import com.igorvd.githubrepo.domain.entities.GitHubRepo
+import com.igorvd.githubrepo.domain.entities.PullRequest
+import com.igorvd.githubrepo.domain.entities.Owner
 import com.igorvd.githubrepo.presentation.BasePresenter
 import com.igorvd.githubrepo.presentation.BaseView
 

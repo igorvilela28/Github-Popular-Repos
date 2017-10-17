@@ -35,6 +35,6 @@ constructor(
 
         super.detachView()
         mView = null
-        
+
     }
 }

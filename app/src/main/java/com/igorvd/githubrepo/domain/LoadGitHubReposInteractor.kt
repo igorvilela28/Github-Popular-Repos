@@ -1,6 +1,6 @@
 package com.igorvd.githubrepo.domain
 
-import com.igorvd.githubrepo.data.model.GitHubRepo
+import com.igorvd.githubrepo.domain.entities.GitHubRepo
 import com.igorvd.githubrepo.data.repository.GitHubRepoRepository
 import com.igorvd.githubrepo.domain.LoadGitHubReposInteractor.Params
 import kotlinx.coroutines.experimental.CommonPool

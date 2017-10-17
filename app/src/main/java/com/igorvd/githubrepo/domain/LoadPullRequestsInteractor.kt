@@ -1,6 +1,6 @@
 package com.igorvd.githubrepo.domain
 
-import com.igorvd.githubrepo.data.model.PullRequest
+import com.igorvd.githubrepo.domain.entities.PullRequest
 import com.igorvd.githubrepo.data.repository.PullRequestsRepository
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred

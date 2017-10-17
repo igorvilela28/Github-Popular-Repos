@@ -1,11 +1,8 @@
 package com.igorvd.githubrepo.presentation.pull_requests
 
-import com.igorvd.githubrepo.data.model.PullRequest
+import com.igorvd.githubrepo.domain.entities.PullRequest
 import com.igorvd.githubrepo.domain.LoadPullRequestsInteractor
-import com.igorvd.githubrepo.domain.exceptions.IORepositoryException
-import com.igorvd.githubrepo.domain.exceptions.RepositoryException
 import com.igorvd.githubrepo.presentation.AbstractPresenter
-import com.igorvd.githubrepo.utils.extensions.throwOrLog
 import javax.inject.Inject
 import javax.inject.Named
 

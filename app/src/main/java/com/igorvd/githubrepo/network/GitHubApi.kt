@@ -4,9 +4,9 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-import com.igorvd.githubrepo.data.model.GitHubRepo
-import com.igorvd.githubrepo.data.model.Owner
-import com.igorvd.githubrepo.data.model.PullRequest
+import com.igorvd.githubrepo.domain.entities.GitHubRepo
+import com.igorvd.githubrepo.domain.entities.Owner
+import com.igorvd.githubrepo.domain.entities.PullRequest
 import retrofit2.http.Path
 
 /**

@@ -1,6 +1,6 @@
 package com.igorvd.githubrepo.data.repository
 
-import com.igorvd.githubrepo.data.model.GitHubRepo
+import com.igorvd.githubrepo.domain.entities.GitHubRepo
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException
 
 /**

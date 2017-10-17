@@ -1,6 +1,6 @@
 package com.igorvd.githubrepo.dependency_injection.core
 
-import com.igorvd.githubrepo.data.model.PullRequest
+import com.igorvd.githubrepo.domain.entities.PullRequest
 import com.igorvd.githubrepo.network.ApiClientBuilder
 import com.igorvd.githubrepo.network.GitHubApi
 import com.igorvd.githubrepo.network.GitHubRepoResponse

@@ -1,7 +1,7 @@
 package com.igorvd.githubrepo.network
 
 import com.google.gson.annotations.SerializedName
-import com.igorvd.githubrepo.data.model.GitHubRepo
+import com.igorvd.githubrepo.domain.entities.GitHubRepo
 
 
 /**
