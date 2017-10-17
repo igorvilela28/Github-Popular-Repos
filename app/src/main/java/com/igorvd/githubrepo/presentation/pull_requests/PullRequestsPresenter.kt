@@ -28,7 +28,7 @@ constructor(
             val pullRequests: List<PullRequest> = mLoadPullRequestsInteractor.execute(params).await()
 
             if(pullRequests.isEmpty()) {
-                mView?.blockRetrieveOpen()
+                mView?.onOpenEmpty()
             } else {
                 mView?.showOpenPullRequests(pullRequests)
             }

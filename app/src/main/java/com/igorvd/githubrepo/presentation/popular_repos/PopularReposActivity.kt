@@ -9,7 +9,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import com.igorvd.githubrepo.R
 import com.igorvd.githubrepo.data.GitHubRepo
 import com.igorvd.githubrepo.presentation.EXTRA_OWNER_LOGIN
@@ -19,6 +21,7 @@ import com.igorvd.githubrepo.utils.EndlessRecyclerViewScrollListener
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_popular_repos.*
 import kotlinx.android.synthetic.main.app_bar_layout.*
+import kotlinx.android.synthetic.main.default_error.*
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -37,6 +40,8 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
     //view objects
     private val mToolbar : Toolbar by lazy { toolbar }
     private val mProgressBar : ProgressBar by lazy { progressBar }
+    private val mTvError : TextView by lazy { tvError }
+    private val mBtnTryAgain : Button by lazy { btnTryAgain }
 
     //recycler view objects
     private val mRecyclerView : RecyclerView by lazy { setupRecyclerView() }
@@ -128,6 +133,9 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
     override fun showProgress() {
 
+        mBtnTryAgain.visibility = View.GONE
+        mTvError.visibility = View.GONE
+
         if(mItems.size > 0) {
             mAdapter.showFooterProgress()
         } else {
@@ -146,6 +154,10 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
 
         if(mItems.size > 0) {
             mAdapter.showFooterError()
+        } else {
+
+            mBtnTryAgain.visibility = View.VISIBLE
+            mTvError.visibility = View.VISIBLE
         }
 
     }
@@ -183,6 +195,10 @@ class PopularReposActivity : AppCompatActivity(), PopularReposContract.View {
         setSupportActionBar(mToolbar)
         supportActionBar!!.setHomeButtonEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+
+        mBtnTryAgain.setOnClickListener({
+            loadRepositories()
+        })
 
     }
 

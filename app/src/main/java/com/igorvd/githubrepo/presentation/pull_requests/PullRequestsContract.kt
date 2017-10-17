@@ -30,9 +30,7 @@ interface PullRequestsContract {
 
         fun showOpenPullRequests(pullRequests : List<PullRequest>)
 
-        fun blockRetrieveOpen()
-
-        fun showClosedPullRequests(pullRequests  : List<PullRequest>)
+        fun onOpenEmpty()
 
         fun clearVisibleList()
 

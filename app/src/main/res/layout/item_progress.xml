@@ -20,10 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -59,15 +55,17 @@
                 android:id="@+id/loadmore_errortxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_gravity="center"
-                android:text="What went wrong"/>
+                android:text="@string/error_loading_1"/>
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:layout_gravity="center"
-                android:text="Clique para tentar novamente"/>
+                android:text="@string/error_loading_2"/>
 
         </LinearLayout>
 

@@ -1,5 +1,7 @@
 package com.igorvd.githubrepo.presentation.pull_requests
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.design.widget.CollapsingToolbarLayout
@@ -9,8 +11,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.TextView
 import com.igorvd.githubrepo.R
 import com.igorvd.githubrepo.data.PullRequest
 import com.igorvd.githubrepo.presentation.EXTRA_OWNER_LOGIN
@@ -19,6 +22,7 @@ import com.igorvd.githubrepo.utils.EndlessRecyclerViewScrollListener
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_pull_requests.*
 import kotlinx.android.synthetic.main.app_bar_layout.*
+import kotlinx.android.synthetic.main.default_error.*
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -28,13 +32,15 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
 
     private val LIST_STATE_KEY = "recycler_state"
     private val ITEMS_STATE_KEY = "items_state"
-    private var listState : Parcelable? = null
+    private var mListState: Parcelable? = null
 
     @Inject
-    lateinit var mPresenter : PullRequestsContract.Presenter
+    protected lateinit var mPresenter : PullRequestsContract.Presenter
 
     //view objects
-    private val mProgressBar : ProgressBar by lazy { pullRequestsPb }
+    private val mProgressBar : ProgressBar by lazy { progressBar }
+    private val mTvError : TextView by lazy { tvError }
+    private val mBtnTryAgain : Button by lazy { btnTryAgain }
     private val mToolbar : Toolbar by lazy { toolbar }
     private val mCtlToolbar : CollapsingToolbarLayout by lazy { ctlToolbar }
 
@@ -45,20 +51,18 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
     private val mAdapter : PullRequestsAdapter by lazy {
         PullRequestsAdapter(
                 this,
-                mVisibleItems,
+                mItems,
                 onItemClicked = { pullRequest -> onPullRequestClicked(pullRequest) },
                 onRetryClick = { loadOpenRepositories() })
     }
     private val mScrollListener : EndlessRecyclerViewScrollListener by lazy { createScrollListener() }
-    private val mVisibleItems: ArrayList<PullRequest> by lazy { ArrayList<PullRequest>() }
-    private val mOpenItems: ArrayList<PullRequest> by lazy { ArrayList<PullRequest>() }
-    private val mClosedItems: ArrayList<PullRequest> by lazy { ArrayList<PullRequest>() }
+
+    //items
+    private val mItems: ArrayList<PullRequest> by lazy { ArrayList<PullRequest>() }
 
     //intent received objects
-    private lateinit var ownerLogin: String
-    private lateinit var repoName: String
-
-    private var blockLoadOpen = false
+    private lateinit var mOwnerLogin: String
+    private lateinit var mRepoName: String
 
     private var mLoadRepositoriesJob : Job? = null
 
@@ -73,12 +77,10 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pull_requests)
 
-        ownerLogin = intent.getStringExtra(EXTRA_OWNER_LOGIN)
-        repoName = intent.getStringExtra(EXTRA_REPO_NAME)
+        mOwnerLogin = intent.getStringExtra(EXTRA_OWNER_LOGIN)
+        mRepoName = intent.getStringExtra(EXTRA_REPO_NAME)
 
         initViews()
-
-        println("On create");
 
         if(savedInstanceState != null) {
 
@@ -90,7 +92,7 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
          * we only start the presenter interaction in the onCreate lifecycle if the items weren't
          * saved by the [onSaveInstanceState] method
          */
-        if(mVisibleItems.size <= 0) {
+        if(mItems.size <= 0) {
             loadOpenRepositories()
         }
     }
@@ -99,8 +101,8 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
 
         super.onResume()
 
-        if(listState != null) {
-            mLayoutManager.onRestoreInstanceState(listState)
+        if(mListState != null) {
+            mLayoutManager.onRestoreInstanceState(mListState)
         }
     }
 
@@ -118,9 +120,9 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
-        listState = mLayoutManager.onSaveInstanceState()
-        outState?.putParcelable(LIST_STATE_KEY, listState)
-        outState?.putParcelableArrayList(ITEMS_STATE_KEY, mVisibleItems)
+        mListState = mLayoutManager.onSaveInstanceState()
+        outState?.putParcelable(LIST_STATE_KEY, mListState)
+        outState?.putParcelableArrayList(ITEMS_STATE_KEY, mItems)
 
     }
 
@@ -134,33 +136,31 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
             mAdapter.removeFooter()
         }
 
-        mVisibleItems.addAll(pullRequests)
+        mItems.addAll(pullRequests)
         mAdapter.notifyDataSetChanged()
     }
 
-    override fun blockRetrieveOpen() {
-        blockLoadOpen = true
-        mAdapter.removeFooter()
-    }
+    override fun onOpenEmpty() {
 
-    override fun showClosedPullRequests(pullRequests: List<PullRequest>) {
-
-        if(mAdapter.hasFooter) {
-            mAdapter.removeFooter()
+        if(mItems.isEmpty()) {
+            mTvError.setText(R.string.empty_content)
+            mTvError.visibility = View.VISIBLE
         }
 
-        mVisibleItems.addAll(pullRequests)
-        mAdapter.notifyDataSetChanged()
+        //we remove the scroll listener to avoid it to try to load more items
+        mRecyclerView.removeOnScrollListener(mScrollListener)
+        mAdapter.removeFooter()
+
     }
 
     override fun clearVisibleList() {
-        mVisibleItems.clear()
+        mItems.clear()
         mAdapter.notifyDataSetChanged()
     }
 
     override fun showProgress() {
 
-        if(mVisibleItems.size > 0) {
+        if(mItems.size > 0) {
             mAdapter.showFooterProgress()
         } else {
 
@@ -176,8 +176,11 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
 
     override fun showError() {
 
-        if(mVisibleItems.size > 0) {
+        if(mItems.size > 0) {
             mAdapter.showFooterError()
+        } else {
+            mBtnTryAgain.visibility = View.VISIBLE
+            mTvError.visibility = View.VISIBLE
         }
 
     }
@@ -188,19 +191,20 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
 
     fun loadOpenRepositories() {
 
-        //we don't call the presenter if is already doing something or if it's blocked
-        if(blockLoadOpen ||
-                (mLoadRepositoriesJob != null && mLoadRepositoriesJob!!.isActive)) {
+        //we don't call the presenter if is already doing something
+        if(mLoadRepositoriesJob != null && mLoadRepositoriesJob!!.isActive) {
             return
         }
 
         mLoadRepositoriesJob = launch(UI) {
-            mPresenter.loadOpenPullRequests(ownerLogin, repoName, mVisibleItems.size)
+            mPresenter.loadOpenPullRequests(mOwnerLogin, mRepoName, mItems.size)
         }
     }
 
     fun onPullRequestClicked(pullRequest: PullRequest) {
-        Toast.makeText(this, "item clicked ${pullRequest.title}", Toast.LENGTH_SHORT).show()
+        val it = Intent(Intent.ACTION_VIEW).setData(Uri.parse(pullRequest.htmlUrl))
+        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(it);
     }
 
     private fun initViews() {
@@ -212,19 +216,22 @@ class PullRequestsActivity : AppCompatActivity(), PullRequestsContract.View {
         setSupportActionBar(mToolbar)
         supportActionBar!!.setHomeButtonEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        mCtlToolbar.title = getString(R.string.title_pull_requests)
+        mCtlToolbar.title = mRepoName
 
+        mBtnTryAgain.setOnClickListener({
+            loadOpenRepositories()
+        })
     }
 
     private fun restoreInstance(savedInstanceState: Bundle) {
 
-        listState = savedInstanceState.getParcelable(LIST_STATE_KEY)
+        mListState = savedInstanceState.getParcelable(LIST_STATE_KEY)
 
         val items = savedInstanceState.getParcelableArrayList<PullRequest>(ITEMS_STATE_KEY)
 
         if(items != null) {
-            mVisibleItems.clear()
-            mVisibleItems.addAll(items)
+            mItems.clear()
+            mItems.addAll(items)
         }
 
     }
