@@ -90,6 +90,8 @@ suspend override fun execute(params: Params?): Deferred<List<GitHubRepo>> = asyn
 
 Ambas nossas features possuem implementações semelhantes, portanto poderiamos ter feito algumas abstrações: Generalizar Adapter para as listas das telas, Generalizar Activities das telas.
 
+Entretanto, devido ao prazo limitado, optei por entregar um produto funcional, ainda que com possibilidades de melhoras.
+
 # Licença
 
     Copyright 2017 Igor Vilela
