@@ -23,7 +23,7 @@ Devido à não especificação de quais pull requests seriam mostrados, foi deci
 
 A arquitetura do projeto segue os conceitos da [Clean architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html) e é utilizado o Model-View-Presenter para a camada de apresentação.
 
-Ainda que estamos seguindo o clean architecture, por questões de simplicidade, as mesmas entidades foram utilizadas em todas as camadas da aplicação. Visto que não eram necessárias alterações ou transformações dos dados.
+Ainda que estejamos seguindo o clean architecture, por questões de simplicidade, as mesmas entidades foram utilizadas em todas as camadas da aplicação. Visto que não eram necessárias alterações ou transformações dos dados.
 
 A estrutura em módulos do projeto é a seguinte:
 
