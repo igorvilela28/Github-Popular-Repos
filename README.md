@@ -92,9 +92,9 @@ Ambas nossas features possuem implementações semelhantes, portanto poderiamos 
 - Generalizar Adapter para as listas das telas
 - Generalizar Activities das telas.
 
-Testes unitrios e de integração devem ser adicionados no futuro.
+Testes unitários e de integração devem ser adicionados no futuro.
 
-Foi observado também uma queda de performance ao carregar itens nas listas. Foi observado que o problema está ligado ao carregamento das imagens dos avatares e deverá ser consertado em versões futuras.
+Foi observado também uma queda de performance ao carregar itens nas listas. O problema está ligado ao carregamento das imagens dos avatares e deve ser consertado em versões futuras.
 
 Entretanto, devido ao prazo limitado, optei por entregar um produto funcional, ainda que com possibilidades de melhoras.
 
