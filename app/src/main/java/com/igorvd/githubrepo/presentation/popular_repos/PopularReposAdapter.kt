@@ -142,13 +142,13 @@ class PopularReposAdapter(
 
             holder.itemView.itemProgressLLRetry.visibility = View.GONE
             holder.itemView.itemprogressIvRetryIcon.visibility = View.GONE
-            holder.itemView.progressBar.visibility = View.VISIBLE
+            holder.itemView.itemProgressBar.visibility = View.VISIBLE
 
             holder.itemView.progressRoot.setOnClickListener {  }
 
         } else if (currentFootType == TYPE_ERROR) {
 
-            holder.itemView.progressBar.visibility = View.GONE
+            holder.itemView.itemProgressBar.visibility = View.GONE
             holder.itemView.itemProgressLLRetry.visibility = View.VISIBLE
             holder.itemView.itemprogressIvRetryIcon.visibility = View.VISIBLE
 

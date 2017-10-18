@@ -12,7 +12,7 @@
     android:id="@+id/progressRoot">
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/itemProgressBar"
         style="@android:style/Widget.Holo.ProgressBar"
         tools:visibility="visible"
         android:visibility="gone"
