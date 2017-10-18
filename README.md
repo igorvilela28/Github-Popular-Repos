@@ -17,11 +17,13 @@ O projeto seguiu os requisitos descritos [aqui](https://github.com/appprova/desa
 - `Mostrar nome do autor` : No mockup podemos observar que nas listagens é mostrado além do login do usuário, também o seu nome. Essa informação não estava disponível em nenhuma das chamadas da API e portanto não foi mostrada nas telas.
 - `Contagem de pull requests abertos e fechados`: Novamente no mockup, podemos observar que na tela de listagem dos pull requests mostra uma contagem dos abertos / fechados. Entretanto, a [chamada](https://developer.github.com/v3/pulls/#list-pull-requests) para recuperar os dados não contém tal informação.
 
-Devido a não especificação de quais pull requests deveriam ser mostrados, foi decidido que seria mostrado apenas os que estavam com o status `open`. Entretanto, como foi utilizado a possibilidade do Kotlin de termos métodos com valores padrões, torna-se fácil modificar o comportamento da tela, ou ainda, após as modificações necessárias na API, termos botões para listagem como presente no mockup.
+Devido à não especificação de quais pull requests seriam mostrados, foi decidido que seria mostrado apenas aqueles que estavam com o status `open`. Entretanto, como foi utilizada a possibilidade do Kotlin de termos métodos com valores padrões, torna-se fácil modificar o comportamento da tela, ou ainda, após as modificações necessárias na API, termos botões para listagem como presente no mockup.
 
 ## Organização do projeto
 
 A arquitetura do projeto segue os conceitos da [Clean architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html) e é utilizado o Model-View-Presenter para a camada de apresentação.
+
+Ainda que estamos seguindo o clean architecture, por questões de simplicidade, foi utilizado as mesmas entidades em todas as camadas, visto que não eram necessárias alterações ou transformações dos dados.
 
 A estrutura em módulos do projeto é a seguinte:
 
@@ -42,9 +44,9 @@ A estrutura em módulos do projeto é a seguinte:
 
 ## Decisões de implementação
 
-Foi decidido a utilização do Kotlin por ser uma nova alternativa para o desenvolvimento Android nativo. Além de ser menos verbosa que o Java, Kotlin nos oferece diversas ferramentas interessantes, como [null safety](https://kotlinlang.org/docs/reference/null-safety.html), [high order functions e lambdas](https://kotlinlang.org/docs/reference/lambdas.html), [delegate properties](https://kotlinlang.org/docs/reference/delegated-properties.html), [extensions](https://kotlinlang.org/docs/reference/extensions.html) e ainda em versão experimental [coroutines](https://github.com/Kotlin/kotlinx.coroutines).
+A utilização do Kotlin foi decidida por ser uma nova alternativa para o desenvolvimento Android nativo. Além de ser menos verbosa que o Java, Kotlin nos oferece diversas ferramentas interessantes, como [null safety](https://kotlinlang.org/docs/reference/null-safety.html), [high order functions e lambdas](https://kotlinlang.org/docs/reference/lambdas.html), [delegate properties](https://kotlinlang.org/docs/reference/delegated-properties.html), [extensions](https://kotlinlang.org/docs/reference/extensions.html) e ainda em versão experimental [coroutines](https://github.com/Kotlin/kotlinx.coroutines).
 
-Foi utilizado coroutines principalmente como uma prova de conceito, ainda que esteja em versão experimental. Programação assíncrona é uma realidade para o desenvolvimento android e o fato de que utilizando coroutines podemos escrever trechos de código assíncronos sequencialmente me chamou bastante a atenção.
+Programação assíncrona é uma realidade para o desenvolvimento Android. O fato de que utilizando coroutines podemos escrever trechos de código assíncronos sequencialmente me chamou bastante a atenção. Portanto, coroutines foram utilizadas como prova de conceito.
 
 De acordo com a [documentação](https://kotlinlang.org/docs/reference/coroutines.html) uma coroutine é uma computação que é capaz de suspender/resumir sua execução, sem bloquear uma thread, o que encaixa perfeitamente com o desenvolvimento Android, visto que precisamos executar certas operações fora da UI Thread (como chamadas de rede, acesso ao banco de dados local, etc).
 
@@ -56,7 +58,7 @@ Sendo assim,foi possível escrever a interação `view <--> presenter <--> inter
         }
 
 ```
-Observe que estamos iniciando uma nova coroutine e utilizando o [dispatcher](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#dispatchers-and-threads) `UI`, que indica que a execução da coroutine será na UI Thread. a função `loadRepositories` é uma `suspend function`, ou seja uma função que pode suspender sua execução e na sua implementação temos: 
+Observe que estamos iniciando uma nova coroutine e utilizando o [dispatcher](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#dispatchers-and-threads) `UI`, que indica que a execução da coroutine será na UI Thread. A função `loadRepositories` é uma `suspend function`, ou seja uma função que pode suspender sua execução e na sua implementação temos: 
 
 ```kotlin
     ...
