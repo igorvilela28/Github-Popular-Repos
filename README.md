@@ -17,7 +17,7 @@ O projeto seguiu os requisitos descritos [aqui](https://github.com/appprova/desa
 - `Mostrar nome do autor` : No mockup podemos observar que nas listagens é mostrado além do login do usuário, também o seu nome. Essa informação não estava disponível em nenhuma das chamadas da API e portanto não foi mostrada nas telas.
 - `Contagem de pull requests abertos e fechados`: Novamente no mockup, podemos observar que na tela de listagem dos pull requests mostra uma contagem dos abertos / fechados. Entretanto, a [chamada](https://developer.github.com/v3/pulls/#list-pull-requests) para recuperar os dados não contém tal informação.
 
-Devido à não especificação de quais pull requests seriam mostrados, foi decidido que seria mostrado apenas aqueles que estavam com o status `open`. Entretanto, como foi utilizada a possibilidade do Kotlin de termos métodos com valores padrões, torna-se fácil modificar o comportamento da tela, ou ainda, após as modificações necessárias na API, termos botões para listagem como presente no mockup.
+Devido à não especificação de quais pull requests seriam mostrados, foi decidido que seria mostrado apenas aqueles que estavam com o status `open`. Entretanto, diferente de Java puro, Kotlin permite a utilização de valores padrões na definição de métodos. Devido a isso, será fácil modificar o comportamento da tela. Ou ainda, após as modificações necessárias na API, ter botões para listagem como apresentado no mockup.
 
 ## Organização do projeto
 
@@ -69,7 +69,7 @@ Observe que estamos iniciando uma nova coroutine e utilizando o [dispatcher](htt
 ```
 Note que estamos fazendo chamadas sequenciais do código, tornando sua intenção clara e direta. Essa foi a maior vantagem notada ao utilizar coroutines: Não precisamos lidar com callbacks ou trechos de código complexos para lidar com assíncronismo.
 
-O segredo para nosso acesso aos dados não serem executados na UI Thread se dá na implementação do método `execute` de nosso Interactor, que inicia uma nova coroutine com o builder [async](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#concurrent-using-async) junto com o dispatcher CommonPool, que garante que a execução será feita em outra thread. Ao finalizar a execução, seja com sucesso ou erro, a coroutine iniciada pelo interactor será resumida na coroutine que o chamou, assim temos as chamadas assíncronas escritas de forma sequencial, além de não precisarmos nos preocupar com atualização das views na  UI Thread, visto que a coroutine do presenter está sendo executada na própria UI Thread.
+O segredo para o acesso aos dados não ser executado na UI Thread se dá na implementação do método `execute` de nosso Interactor, que inicia uma nova coroutine com o builder [async](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#concurrent-using-async) junto com o dispatcher CommonPool, que garante que a execução será feita em outra thread. Ao finalizar a execução, seja com sucesso ou erro, a coroutine iniciada pelo interactor será resumida na coroutine que o chamou, assim temos as chamadas assíncronas escritas de forma sequencial, além de não precisarmos nos preocupar com atualização das views na  UI Thread, visto que a coroutine do presenter está sendo executada na própria UI Thread.
 
 ```kotlin
 suspend override fun execute(params: Params?): Deferred<List<GitHubRepo>> = async(CommonPool) {
