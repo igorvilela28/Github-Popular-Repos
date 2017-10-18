@@ -31,7 +31,7 @@ A estrutura em módulos do projeto é a seguinte:
 - `network`: Responsável pela comunicação via rede do app.
 - `presentation`: Contém as telas do aplicativo com os seus respectivos presenters.
 
-## Frameworks utilizados
+## Bibliotecas e frameworks utilizados
 
 - [Retrofit](http://square.github.io/retrofit/): para as chamadas REST.
 - [Dagger2](https://github.com/google/dagger): para injeção de dependência.
