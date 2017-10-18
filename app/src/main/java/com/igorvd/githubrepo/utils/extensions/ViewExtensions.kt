@@ -27,6 +27,7 @@ fun ImageView.loadImageFromUrl(url: String,
     val rc :RequestCreator = Picasso.with(context).
             load(url)
             .transform(CircleTransform())
+            .fit()
 
     if(placeholderRes != -1) rc.placeholder(placeholderRes)
     if(errorRes != -1) rc.error(errorRes)
