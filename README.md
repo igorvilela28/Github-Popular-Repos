@@ -56,7 +56,7 @@ Sendo assim,foi possível escrever a interação `view <--> presenter <--> inter
         }
 
 ```
-Observe que estamos iniciando uma nova coroutine e utilizando o [dispatcher](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#dispatchers-and-threads) `UI`, que indica que a execução da coroutine será na UI Thread. a função `loadRepositories` é uma `suspend function`, ou seja uma função que pode suspender sua execução, na sua implementação temos: 
+Observe que estamos iniciando uma nova coroutine e utilizando o [dispatcher](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#dispatchers-and-threads) `UI`, que indica que a execução da coroutine será na UI Thread. a função `loadRepositories` é uma `suspend function`, ou seja uma função que pode suspender sua execução e na sua implementação temos: 
 
 ```kotlin
     ...
@@ -65,9 +65,9 @@ Observe que estamos iniciando uma nova coroutine e utilizando o [dispatcher](htt
     mView?.showRepositories(repos)
     ...
 ```
-Note que estamos fazendo chamadas sequenciais do código e fica bem claro a intenção do código. Essa foi a maior vantagem notada ao utilizar coroutines: Não precisamos lidar com callbacks ou trecos de código complexos.
+Note que estamos fazendo chamadas sequenciais do código, tornando sua intenção clara e direta. Essa foi a maior vantagem notada ao utilizar coroutines: Não precisamos lidar com callbacks ou trechos de código complexos para lidar com assíncronismo.
 
-O segredo para nosso acesso aos dados não serem executados na UI Thread se dá na implementação do método `execute` de nosso Interactor, que inicia uma nova coroutine com o builder [async](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#concurrent-using-async), utilizando o dispatcher CommonPool, que garante que a execução será feita em outra thread. Ao finalizar a execução, seja com sucesso ou erro, a coroutine lançada pelo interactor será resumida na coroutine que o chamou, assim temos as chamadas assíncronas escritas de forma sequencial, além de não precisarmos nos preocupar com atualização das views na  UI Thread, visto que a coroutine do presenter está sendo executada na própria UI Thread.
+O segredo para nosso acesso aos dados não serem executados na UI Thread se dá na implementação do método `execute` de nosso Interactor, que inicia uma nova coroutine com o builder [async](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#concurrent-using-async) junto com o dispatcher CommonPool, que garante que a execução será feita em outra thread. Ao finalizar a execução, seja com sucesso ou erro, a coroutine iniciada pelo interactor será resumida na coroutine que o chamou, assim temos as chamadas assíncronas escritas de forma sequencial, além de não precisarmos nos preocupar com atualização das views na  UI Thread, visto que a coroutine do presenter está sendo executada na própria UI Thread.
 
 ```kotlin
 suspend override fun execute(params: Params?): Deferred<List<GitHubRepo>> = async(CommonPool) {
