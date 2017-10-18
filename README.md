@@ -17,7 +17,7 @@ O projeto seguiu os requisitos descritos [aqui](https://github.com/appprova/desa
 - `Mostrar nome do autor` : No mockup podemos observar que nas listagens é mostrado além do login do usuário, também o seu nome. Essa informação não estava disponível em nenhuma das chamadas da API e portanto não foi mostrada nas telas.
 - `Contagem de pull requests abertos e fechados`: Novamente no mockup, podemos observar que na tela de listagem dos pull requests mostra uma contagem dos abertos / fechados. Entretanto, a [chamada](https://developer.github.com/v3/pulls/#list-pull-requests) para recuperar os dados não contém tal informação.
 
-Devido a não especificação de quais pull requests deveria ser mostrado, foi decidido que seriam mostrado apenas os que estavam com o status `open`. Entretanto, como foi utilizado a possibilidade do Kotlin de termos métodos com valores padrões, todos os parametros para as requisições foram colocados como padrão e daí torna-se fácil modificar o comportamento da tela, ou ainda, após as modificações necessárias na API, termos botões para listagem como presente no mockup.
+Devido a não especificação de quais pull requests deveriam ser mostrados, foi decidido que seria mostrado apenas os que estavam com o status `open`. Entretanto, como foi utilizado a possibilidade do Kotlin de termos métodos com valores padrões, torna-se fácil modificar o comportamento da tela, ou ainda, após as modificações necessárias na API, termos botões para listagem como presente no mockup.
 
 ## Organização do projeto
 
