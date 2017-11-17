@@ -5,6 +5,7 @@ import com.igorvd.githubrepo.domain.exceptions.IORepositoryException
 import com.igorvd.githubrepo.domain.exceptions.RepositoryException
 import com.igorvd.githubrepo.presentation.AbstractPresenter
 import com.igorvd.githubrepo.utils.extensions.throwOrLog
+import kotlinx.coroutines.experimental.async
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Named
@@ -26,7 +27,11 @@ constructor(
         doWorkWithProgress({
 
             val params = LoadGitHubReposInteractor.Params(currentItemsSize)
-            val repos = mLoadGitHubReposInteractor.execute(params).await()
+
+            val loadReposJob = async { mLoadGitHubReposInteractor.execute(params) }
+
+            val repos = loadReposJob.await()
+
             mView?.showRepositories(repos)
         })
     }

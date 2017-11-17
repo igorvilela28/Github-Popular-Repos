@@ -18,18 +18,17 @@ import kotlinx.coroutines.experimental.async
 class LoadGitHubReposInteractor(private val gitHubRepository : GitHubRepoRepository) :
         Interactor<List<GitHubRepo>, Params?> {
 
-    suspend override fun execute(params: Params?): Deferred<List<GitHubRepo>> = async(CommonPool) {
+    suspend override fun execute(params: Params?): List<GitHubRepo> {
 
         if(params != null) {
 
             val page = getPageToSearch(params)
-            gitHubRepository.loadRepositories(page = page)
+            return gitHubRepository.loadRepositories(page = page)
 
         } else {
 
-            gitHubRepository.loadRepositories()
+            return gitHubRepository.loadRepositories()
         }
-
     }
 
     private fun getPageToSearch(params: Params): Int=(params.currentItemsSize / params.pageSize) + 1

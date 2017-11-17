@@ -3,8 +3,6 @@ package com.igorvd.githubrepo.domain
 import com.igorvd.githubrepo.domain.entities.PullRequest
 import com.igorvd.githubrepo.data.repository.PullRequestsRepository
 import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
 
 /**
  * Interactor that load a list of [PullRequest] objects.
@@ -17,30 +15,30 @@ import kotlinx.coroutines.experimental.async
 class LoadPullRequestsInteractor(private val pullRequestsRepository: PullRequestsRepository) :
         Interactor<List<PullRequest>, LoadPullRequestsInteractor.Params> {
 
-    suspend override fun execute(params: Params): Deferred<List<PullRequest>> = async(CommonPool) {
+    suspend override fun execute(params: Params): List<PullRequest> {
 
-        if(isLastPage(params)) {
-            ArrayList<PullRequest>()
+        if (isLastPage(params)) {
+            return ArrayList<PullRequest>()
         } else {
 
             val page = getPageToSearch(params)
-            pullRequestsRepository.loadPullRequests(
+            return pullRequestsRepository.loadPullRequests(
                     ownerLogin = params.ownerLogin,
                     repoName = params.repoName,
                     page = page)
         }
     }
 
-    private fun getPageToSearch(params: Params): Int =
-            (params.currentItemsSize / params.pageSize) + 1
+        private fun getPageToSearch(params: Params): Int =
+                (params.currentItemsSize / params.pageSize) + 1
 
-    private fun isLastPage(params: Params) : Boolean =
-            params.currentItemsSize % params.pageSize > 0
+        private fun isLastPage(params: Params) : Boolean =
+                params.currentItemsSize % params.pageSize > 0
 
-    class Params (
-            val ownerLogin: String,
-            val repoName: String,
-            val currentItemsSize: Int,
-            val pageSize: Int = DEFAULT_ITEMS_PER_PAGE
-    )
-}
+        class Params (
+                val ownerLogin: String,
+                val repoName: String,
+                val currentItemsSize: Int,
+                val pageSize: Int = DEFAULT_ITEMS_PER_PAGE
+        )
+    }

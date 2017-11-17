@@ -11,6 +11,6 @@ import kotlinx.coroutines.experimental.Deferred
 interface Interactor<T, Params> {
 
     @Throws(RepositoryException::class)
-    suspend fun execute(params: Params): Deferred<T>
+    suspend fun execute(params: Params): T
 
 }

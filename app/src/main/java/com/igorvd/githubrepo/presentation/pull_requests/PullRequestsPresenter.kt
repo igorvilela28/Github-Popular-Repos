@@ -3,6 +3,8 @@ package com.igorvd.githubrepo.presentation.pull_requests
 import com.igorvd.githubrepo.domain.entities.PullRequest
 import com.igorvd.githubrepo.domain.LoadPullRequestsInteractor
 import com.igorvd.githubrepo.presentation.AbstractPresenter
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.async
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -23,7 +25,9 @@ constructor(
         doWorkWithProgress {
 
             val params = LoadPullRequestsInteractor.Params(ownerLogin, repoName, currentItemsSize)
-            val pullRequests: List<PullRequest> = mLoadPullRequestsInteractor.execute(params).await()
+            val loadPullRequestsJob = async { mLoadPullRequestsInteractor.execute(params) }
+
+             val pullRequests : List<PullRequest> = loadPullRequestsJob.await();
 
             if(pullRequests.isEmpty()) {
                 mView?.onOpenEmpty()
