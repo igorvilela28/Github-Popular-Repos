@@ -1,0 +1,45 @@
+<RelativeLayout
+    android:id="@+id/errorContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.Holo.ProgressBar"
+        tools:visibility="visible"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:id="@+id/btnTryAgain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_centerInParent="true"
+        android:text="@string/try_again"
+        />
+
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/error_fail_connection"
+        android:visibility="gone"
+        android:layout_above="@+id/btnTryAgain"
+        android:gravity="center"
+        tools:visibility="visible"
+
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginStart="@dimen/margin_padding_small"
+        android:layout_marginEnd="@dimen/margin_padding_small"
+        android:layout_gravity="center_horizontal|center_vertical"
+        />
+</RelativeLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardPreventCornerOverlap="true"
+    card_view:cardElevation="4dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="false"
+        android:padding="@dimen/margin_padding_medium">
+
+        <TextView
+            android:id="@+id/pullRequestTvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Title"
+            android:textColor="@color/material_lightblue800"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_medium"
+            android:layout_marginTop="@dimen/margin_padding_small"
+            android:layout_marginStart="@dimen/margin_padding_small"
+            android:layout_marginEnd="@dimen/margin_padding_small"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/pullRequestTvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            tools:text="Description"
+            android:layout_marginStart="@dimen/margin_padding_small"
+            android:layout_marginEnd="@dimen/margin_padding_small"
+            android:layout_marginTop="@dimen/margin_padding_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pullRequestTvTitle"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <ImageView
+            android:id="@+id/pullRequestIvAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            tools:src="@drawable/ic_launcher_background"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/margin_padding_small"
+            android:layout_marginStart="@dimen/margin_padding_small"
+            app:layout_constraintTop_toBottomOf="@+id/pullRequestTvDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/pullRequestTvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/material_lightblue800"
+            tools:text="TextView"
+            android:gravity="end"
+            android:textAlignment="textEnd"
+            android:layout_marginStart="@dimen/margin_padding_small"
+            app:layout_constraintTop_toTopOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintStart_toEndOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
+            />
+
+
+        <TextView
+            android:id="@+id/pullRequestTvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="17/10/2017"
+            android:textSize="@dimen/text_micro"
+            android:gravity="end"
+            android:textAlignment="textEnd"
+            android:layout_marginEnd="@dimen/margin_padding_small"
+            app:layout_constraintTop_toTopOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/pullRequestIvAvatar"
+            app:layout_constraintStart_toEndOf="@+id/pullRequestTvUsername"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="1.0"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

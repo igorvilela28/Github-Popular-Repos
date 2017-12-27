@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GitHubRepo</string>
+
+    <string name="title_popular_java_repos">Popular Java GitHub Repos</string>
+    <string name="title_pull_requests">%s - Open pull requests</string>
+
+    <string name="try_again">Tentar novamente</string>
+
+    <string name="error_fail_connection">Ocorreu um erro. Por favor verifique a conexão de rede.</string>
+    <string name="error_unknown">Ocorreu um erro. Por favor tente novamente mais tarde</string>
+
+    <string name="error_loading_1">Problemas ao carregar mais dados</string>
+    <string name="error_loading_2">Clique para tentar novamente</string>
+    <string name="empty_content">Sem conteúdo a ser mostrado</string>
+
+</resources>
