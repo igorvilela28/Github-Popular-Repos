@@ -13,7 +13,6 @@ import javax.inject.Named
  * @since 14/10/17
  */
 
-@Singleton
 @Module(includes = arrayOf(NetworkModule::class))
 class AppModule {
 
