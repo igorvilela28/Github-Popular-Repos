@@ -19,6 +19,7 @@ import dagger.BindsInstance
         BuilderModule::class
         )
 )
+@Singleton
 interface AppComponent {
 
     @Component.Builder
