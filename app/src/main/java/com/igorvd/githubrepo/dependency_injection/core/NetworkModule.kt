@@ -15,6 +15,7 @@ import javax.inject.Singleton
  * @since 14/10/17
  */
 
+@Singleton
 @Module
 class NetworkModule {
 

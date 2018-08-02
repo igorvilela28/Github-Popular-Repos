@@ -45,8 +45,6 @@ class ApiClientBuilder {
 
             if (BuildConfig.DEBUG) {
 
-                //sHttpClientBuilder.addNetworkInterceptor(StethoInterceptor())
-
                 // Critical part, LogClient must be last one if you have more interceptors
                 sHttpClientBuilder.addInterceptor(HttpLoggingInterceptor().getSimpleLogging())
 

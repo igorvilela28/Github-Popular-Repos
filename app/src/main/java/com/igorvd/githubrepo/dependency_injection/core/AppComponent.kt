@@ -13,7 +13,6 @@ import dagger.BindsInstance
  * @since 14/10/17
  */
 
-@Singleton
 @Component(modules = arrayOf(
         AndroidSupportInjectionModule::class,
         AppModule::class,
